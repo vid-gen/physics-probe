@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="292" height="126" viewBox="0 0 292 126" fill="none" stroke="#686F82" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <g id="film">
+      <path d="M3 4H1v20h30v-2M6 2H3v20h30v-2"/>
+      <rect x="6" y="0" width="29" height="20" rx="1"/>
+      <path d="M15.5 1v18m9.5-18v18M7 10h27"/>
+    </g>
+    <g id="to-right"><path d="m-3-2 3 2-3 2"/></g>
+    <g id="to-up"><path d="m-2 3 2-3 2 3"/></g>
+  </defs>
+  <g stroke-width="1.75">
+    <use href="#film" x="7" y="11"/><use href="#film" x="7" y="88"/>
+    <rect x="56" y="7" width="48" height="31" rx="2.7"/>
+    <rect x="56" y="85" width="48" height="31" rx="2.7"/>
+    <rect x="116" y="17" width="3" height="11" rx=".6"/><rect x="122" y="17" width="3" height="11" rx=".6"/>
+    <rect x="128" y="17" width="3" height="11" rx=".6"/><rect x="134" y="17" width="3" height="11" rx=".6"/>
+    <circle cx="148" cy="22.5" r="3.7"/>
+    <rect x="160" y="7" width="47" height="31" rx="2.7"/>
+    <rect x="231" y="12" width="44" height="21" rx="2"/>
+    <rect x="239" y="54" width="48" height="19" rx="1.9"/>
+    <rect x="231" y="90" width="44" height="21" rx="2"/>
+    <rect x="116" y="51" width="52" height="18" rx="1.8"/>
+    <rect x="126" y="91" width="52" height="19" rx="1.8"/>
+  </g>
+  <g stroke-width="1.35">
+    <path d="M42 22.5h13m49 0h11m23 0h6.3m7.4 0h7.3m48 0h23M253 33v20m-110.5-2V40H148V27m-106 73.5h13m49 0h21m53 0h52m23-10.5v-8h11v-8"/>
+    <path d="M80 40v42" stroke-dasharray="3 3"/>
+    <path d="M17 3H3v77h21v6"/>
+    <use href="#to-right" x="55" y="22.5"/><use href="#to-right" x="159" y="22.5"/>
+    <use href="#to-right" x="230" y="22.5"/><use href="#to-right" x="55" y="100.5"/>
+    <use href="#to-right" x="125" y="100.5"/><use href="#to-right" x="230" y="100.5"/>
+    <use href="#to-up" x="148" y="27"/><use href="#to-up" x="264" y="74"/>
+    <path d="m78 80 2 3 2-3m169-30 2 3 2-3"/>
+  </g>
+</svg>

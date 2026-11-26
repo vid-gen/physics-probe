@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 339 128" fill="none">
+  <defs>
+    <g id="encoder" stroke="#252724" stroke-width="1.7" stroke-linejoin="round">
+      <path fill="#ebe9dd" d="m0 30 31-19 7 4-31 19z"/>
+      <path fill="#353630" d="m31 11 7 4v69L7 103l-7-4 31-19z"/>
+      <path fill="#f3f0e5" d="m0 30 31-19v69L0 99z"/>
+      <path stroke-width="1.15" d="m5 38 21-13m-21 18 21-13m-21 18 21-13"/>
+      <path fill="#383a35" stroke="none" d="m5 72 15-9v8L5 80z"/>
+    </g>
+    <g id="token" stroke="#252724" stroke-width="1.6" stroke-linejoin="round">
+      <path fill="#eeece0" d="m0 5 9-5 15 7-9 5z"/>
+      <path fill="#41423b" d="m0 5 15 7v3L0 8z"/>
+      <path fill="#292b27" d="m15 12 9-5v3l-9 5z"/>
+    </g>
+  </defs>
+  <!-- The connections are behind the opaque printed faces. -->
+  <g stroke="#4a4b45" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M59 40h10l14-13h12M59 57h20l6-8h10M59 74h21l5-3h10M59 91h36"/>
+    <path d="M111 32h14l24 19h17m-55 3h21l13 9h21m-55 13h21l10-1h24m-55 23h10l24-11h21"/>
+    <path d="M259 39h28l12-13h16m-56 30h31l7-8h18m-56 25h32l7-3h17m-56 20h26l12 2h18"/>
+  </g>
+  <!-- An image plane, partitioned into square patches in its own coordinates. -->
+  <g transform="matrix(1 -.43 0 1 4 49)" stroke="#262822" stroke-linejoin="round">
+    <path fill="#363731" stroke-width="1.8" d="m0 0 5 3v55l-5-3zm0 55 55 0 5 3-55 0z"/>
+    <path fill="#efecdf" stroke-width="1.8" d="M0 0h55v55H0z"/>
+    <path fill="#494a42" stroke="none" d="M0 27.5h13.75v13.75H0zm13.75-13.75H27.5V27.5H13.75zM27.5 0h13.75v13.75H27.5z"/>
+    <path fill="#97978b" stroke="none" d="M0 41.25h13.75V55H0zM27.5 27.5h13.75v13.75H27.5z"/>
+    <path stroke-width="1.05" d="M13.75 0v55M27.5 0v55M41.25 0v55M0 13.75h55M0 27.5h55M0 41.25h55"/>
+    <path stroke-width="1.8" d="M0 0h55v55H0z"/>
+  </g>
+  <g>
+    <use href="#token" x="91" y="20"/>
+    <use href="#token" x="91" y="42"/>
+    <use href="#token" x="91" y="64"/>
+    <use href="#token" x="91" y="86"/>
+  </g>
+  <g>
+    <use href="#encoder" x="151" y="12"/>
+    <use href="#encoder" x="173" y="11"/>
+    <use href="#encoder" x="195" y="10"/>
+    <use href="#encoder" x="217" y="9"/>
+    <use href="#encoder" x="239" y="8"/>
+  </g>
+  <g>
+    <use href="#token" x="311" y="19"/>
+    <use href="#token" x="311" y="41"/>
+    <use href="#token" x="311" y="63"/>
+    <use href="#token" x="311" y="85"/>
+  </g>
+</svg>

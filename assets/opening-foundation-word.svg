@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1468 100" width="1468" height="100">
+  <defs>
+    <linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1468" y2="0">
+      <stop stop-color="#F3CE76"/>
+      <stop offset=".54" stop-color="#F3CE76" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#F3CE76" stop-opacity=".72"/>
+    </linearGradient>
+    <pattern id="screen" patternUnits="userSpaceOnUse" width="7" height="7">
+      <path fill="#BDC0CE" opacity=".8" d="M1.75.4a1.35 1.35 0 1 1 0 2.7 1.35 1.35 0 1 1 0-2.7ZM5.25 3.9a1.35 1.35 0 1 1 0 2.7 1.35 1.35 0 1 1 0-2.7Z"/>
+    </pattern>
+    <clipPath id="letters" clip-rule="evenodd">
+      <path transform="translate(0 0)" d="M0 0H69V23H26V41H62V64H26V100H0Z"/>
+      <path transform="translate(75 0)" d="M47 0C75 0 94 20 94 50S75 100 47 100S0 80 0 50S19 0 47 0Z M47 24C34 24 26 34 26 50S34 76 47 76S68 66 68 50S60 24 47 24Z"/>
+      <path transform="translate(175 0)" d="M0 0H26V59C26 70 31 76 43.5 76S61 70 61 59V0H87V60C87 86 71 100 43.5 100S0 86 0 60Z"/>
+      <path transform="translate(268 0)" d="M0 0H22L68 51V0H94V100H72L26 49V100H0Z"/>
+      <path transform="translate(368 0)" d="M0 0H42C73 0 94 20 94 50S73 100 42 100H0Z M26 24V76H41C58 76 67 66 67 50S58 24 41 24Z"/>
+      <path transform="translate(468 0)" d="M0 100L35 0H61L96 100H69L48 35L27 100Z"/>
+      <path transform="translate(468 0)" d="M39 62H57L64 84H32Z"/>
+      <path transform="translate(570 0)" d="M0 0H82V24H54V100H28V24H0Z"/>
+      <path transform="translate(658 0)" d="M0 0H26V100H0Z"/>
+      <path transform="translate(690 0)" d="M47 0C75 0 94 20 94 50S75 100 47 100S0 80 0 50S19 0 47 0Z M47 24C34 24 26 34 26 50S34 76 47 76S68 66 68 50S60 24 47 24Z"/>
+      <path transform="translate(790 0)" d="M0 0H22L68 51V0H94V100H72L26 49V100H0Z"/>
+      <path transform="translate(920 0)" d="M0 0H24L54 42L84 0H108V100H82V46L55 82H53L26 46V100H0Z"/>
+      <path transform="translate(1034 0)" d="M47 0C75 0 94 20 94 50S75 100 47 100S0 80 0 50S19 0 47 0Z M47 24C34 24 26 34 26 50S34 76 47 76S68 66 68 50S60 24 47 24Z"/>
+      <path transform="translate(1134 0)" d="M0 0H42C73 0 94 20 94 50S73 100 42 100H0Z M26 24V76H41C58 76 67 66 67 50S58 24 41 24Z"/>
+      <path transform="translate(1234 0)" d="M0 0H72V23H26V38H61V61H26V77H72V100H0Z"/>
+      <path transform="translate(1312 0)" d="M0 0H26V76H68V100H0Z"/>
+      <path transform="translate(1386 0)" d="M80 26L55 32C53 25 47 21 40 21C32 21 27 24 27 28C27 33 32 35 44 38C67 43 82 52 82 69C82 89 66 100 41 100C19 100 5 91 0 73L25 66C28 74 33 79 43 79C51 79 56 76 56 71C56 66 49 64 37 61C16 56 2 49 2 31C2 12 17 0 40 0C62 0 76 9 80 26Z"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#letters)">
+    <rect width="1468" height="100" fill="url(#ink)"/>
+    <rect width="1468" height="100" fill="url(#screen)"/>
+  </g>
+</svg>

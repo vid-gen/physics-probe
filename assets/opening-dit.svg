@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="308" height="128" viewBox="109 20 1840 766" fill="none" stroke="#686F82" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <marker id="arrow" viewBox="0 0 22 22" refX="19" refY="11" markerWidth="19" markerHeight="19" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="m4 3 15 8-15 8" stroke-width="5"/>
+    </marker>
+    <g id="sum" stroke-width="6">
+      <circle r="20"/>
+      <path d="M-8 0H8M0-8V8"/>
+    </g>
+    <g id="pair" stroke-width="6.5">
+      <rect width="164" height="80" rx="10"/>
+      <rect y="90" width="164" height="36" rx="8"/>
+    </g>
+  </defs>
+  <g stroke-width="7">
+    <rect x="121" y="101" width="150" height="122" rx="11"/>
+    <rect x="291" y="101" width="149" height="122" rx="11"/>
+    <rect x="121" y="246" width="320" height="66" rx="10"/>
+    <rect x="121" y="325" width="320" height="64" rx="10"/>
+    <rect x="121" y="408" width="320" height="113" rx="13"/>
+    <rect x="121" y="538" width="164" height="67" rx="10"/>
+    <rect x="308" y="538" width="131" height="67" rx="10"/>
+    <rect x="127" y="631" width="155" height="126" rx="11"/>
+    <rect x="307" y="657" width="132" height="42" rx="8"/>
+    <rect x="307" y="713" width="132" height="44" rx="8"/>
+    <rect x="577" y="33" width="434" height="744" rx="38"/>
+    <rect x="1040" y="33" width="432" height="744" rx="38"/>
+    <rect x="1505" y="33" width="432" height="744" rx="38"/>
+  </g>
+  <g stroke-width="6.5">
+    <rect x="636" y="120" width="164" height="36" rx="8"/>
+    <use xlink:href="#pair" x="636" y="170"/>
+    <rect x="636" y="319" width="164" height="39" rx="8"/>
+    <rect x="636" y="455" width="164" height="39" rx="8"/>
+    <use xlink:href="#pair" x="636" y="509"/>
+    <rect x="636" y="655" width="164" height="37" rx="8"/>
+    <rect x="636" y="723" width="164" height="40" rx="8"/>
+    <rect x="832" y="646" width="128" height="53" rx="8"/>
+    <rect x="816" y="723" width="162" height="40" rx="8"/>
+    <use xlink:href="#pair" x="1101" y="143"/>
+    <use xlink:href="#pair" x="1101" y="359"/>
+    <use xlink:href="#pair" x="1101" y="565"/>
+    <rect x="1104" y="722" width="162" height="40" rx="8"/>
+    <rect x="1280" y="722" width="160" height="40" rx="8"/>
+    <use xlink:href="#pair" x="1567" y="143"/>
+    <use xlink:href="#pair" x="1567" y="402"/>
+    <rect x="1567" y="595" width="164" height="92" rx="10"/>
+    <rect x="1567" y="722" width="162" height="40" rx="8"/>
+    <rect x="1745" y="722" width="160" height="40" rx="8"/>
+  </g>
+  <g stroke-width="5">
+    <path d="M198 245v-20" marker-end="url(#arrow)"/>
+    <path d="M367 245v-20" marker-end="url(#arrow)"/>
+    <path d="M281 312v13m0 64v19m-77 113v17m169-17v17M204 605v26m169-26v52m0 42v14"/>
+    <path d="m445 408 129-350m-129 464 130 226" stroke-dasharray="15 14"/>
+    <use xlink:href="#sum" x="718" y="85"/>
+    <use xlink:href="#sum" x="718" y="415"/>
+    <path d="M718 64V40" marker-end="url(#arrow)"/>
+    <path d="M718 106v14m0 36v14m0 80v10m0 36v23m0 39v37m0 40v20m0 39v15m0 80v10m0 36v20m0 37v31m177-24v24"/>
+    <path d="M718 377H601V82h82" marker-end="url(#arrow)"/>
+    <path d="M718 706H601V411h82" marker-end="url(#arrow)"/>
+    <path d="M895 646V138h-90" marker-end="url(#arrow)"/>
+    <path d="M895 282h-90" marker-end="url(#arrow)"/>
+    <path d="M895 475h-90" marker-end="url(#arrow)"/>
+    <path d="M895 619h-90" marker-end="url(#arrow)"/>
+    <use xlink:href="#sum" x="1181" y="100"/>
+    <use xlink:href="#sum" x="1181" y="326"/>
+    <use xlink:href="#sum" x="1181" y="530"/>
+    <path d="M1181 79V47" marker-end="url(#arrow)"/>
+    <path d="M1181 120v23m0 80v10m0 36v37m0 40v13m0 80v10m0 36v25m0 40v15m0 80v10m0 36v31"/>
+    <path d="M1181 285h-115V98h81" marker-end="url(#arrow)"/>
+    <path d="M1181 501h-115V321h81" marker-end="url(#arrow)"/>
+    <path d="M1181 708h-115V529h81" marker-end="url(#arrow)"/>
+    <path d="M1357 722V398h-87" marker-end="url(#arrow)"/>
+    <use xlink:href="#sum" x="1645" y="100"/>
+    <use xlink:href="#sum" x="1645" y="338"/>
+    <path d="M1645 79V48" marker-end="url(#arrow)"/>
+    <path d="M1645 120v23m0 80v10m0 36v49m0 40v44m0 80v10m0 36v67m0 92v35"/>
+    <path d="M1645 285h-113V98h81" marker-end="url(#arrow)"/>
+    <path d="M1645 563h-113V337h81" marker-end="url(#arrow)"/>
+    <path d="M1824 722v-82h-89" marker-end="url(#arrow)"/>
+  </g>
+</svg>

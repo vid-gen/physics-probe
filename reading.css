@@ -1,0 +1,165 @@
+/* The reading chapters share a quiet paper surface, a ruled label, and one data accent. */
+.section[data-ark-depth="moderate"] {
+  --paper: #f7f9f8;
+  --ink: #182832;
+  --quiet: #435760;
+  --rule: #c6d2d4;
+  --read-accent: #08645f;
+  --chart-ink: #192b36;
+  background: var(--paper);
+  color: var(--ink);
+  padding-block: clamp(3.5rem, 6.2vw, 6.4rem);
+}
+
+.section[data-ark-depth="moderate"] .overline {
+  color: var(--read-accent);
+  gap: .68rem;
+  font-size: .8125rem;
+  letter-spacing: .09em;
+}
+
+.section[data-ark-depth="moderate"] .bars {
+  display: inline-block;
+  width: 1.8rem;
+  height: 1px;
+  border: 0;
+  transform: none;
+  background: currentColor;
+  position: relative;
+  overflow: visible;
+}
+.section[data-ark-depth="moderate"] .bars::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.section[data-ark-depth="moderate"] h2 {
+  font: 400 clamp(2.7rem, 4.1vw, 4.45rem)/1.045 var(--serif, Georgia, serif);
+  letter-spacing: -.045em;
+}
+.section[data-ark-depth="moderate"] h2 em {
+  color: var(--read-accent);
+  font-weight: inherit;
+}
+.section[data-ark-depth="moderate"] :is(.body-intro, .event-head > p, .inter-head > p, .obs-copy > p:last-child, .native > div > p:last-child) {
+  color: var(--quiet);
+  line-height: 1.65;
+}
+.section[data-ark-depth="moderate"] :is(.media-note, .fig-note, .effect-note) {
+  font: 400 .875rem/1.6 var(--body);
+  color: var(--quiet);
+}
+.section[data-ark-depth="moderate"] a { color: var(--read-accent) }
+.section[data-ark-depth="moderate"] a:focus-visible { outline-color: var(--read-accent) }
+.section[data-ark-depth="moderate"] ::selection { background: #b3e8e0; color: #102c33 }
+
+#study .modality h3,
+#observations .matched h3,
+#observations .transfer figcaption > span,
+#events .event-figure figcaption > span:first-child,
+#interventions .native h3 {
+  font-family: var(--serif, Georgia, serif);
+  font-weight: 500;
+  letter-spacing: -.032em;
+  line-height: 1.14;
+}
+#study .modalities { grid-template-columns: repeat(3, minmax(0, 1fr)) }
+#study .sample { aspect-ratio: 2.15; background: #263842 }
+#study .crop-mark { display: none }
+#study .modality p { font-size: 1rem; line-height: 1.57 }
+
+#observations.section { background: #ecf2f2; border-top-color: var(--rule) }
+#observations .transfer { background: #fcfdfc; border-color: var(--rule) }
+#observations .transfer::before { display: none }
+#observations .bar-track {
+  background: linear-gradient(90deg, transparent calc(40% - .6px), #7b9197 calc(40% - .6px), #7b9197 calc(40% + .6px), transparent calc(40% + .6px));
+  border-right-color: var(--rule);
+}
+#observations .bar-row > span { color: var(--ink) }
+#observations .t-box i { background: #536873 }
+#observations .t-fixed i {
+  background: repeating-linear-gradient(-50deg, #29766f 0 2px, #f4fbf8 2px 5px);
+  border-color: #29766f;
+}
+#observations .t-refit i { background: var(--read-accent) }
+#observations :is(.bar-axis, .last-frame, .matched) { border-color: var(--rule) }
+#observations :is(.bar-axis, .transfer small, .last-figure span, .last-frame p, .matched figcaption p, .matched dt, .time-labels, .frame-label) { color: var(--quiet) }
+#observations .last-frame b { color: var(--ink) }
+#observations .last-figure strong,
+#interventions :is(.effect strong, .forecast strong) {
+  font-family: var(--serif, Georgia, serif);
+  font-weight: 450;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -.055em;
+}
+
+#events.section { border-block: 1px solid var(--rule) }
+#events .event-figure {
+  padding: clamp(1.25rem, 2.7vw, 2.6rem);
+  background: var(--chart-ink);
+  color: #f6fafb;
+}
+#events .event-figure :is(.chart-unit, .fig-note),
+#events .range-table tbody small,
+#events .x-axis { color: #bfced3 }
+#events .range-table :is(th, td) { border-color: #425760 }
+#events .range-table thead th { color: #e6eff0; border-color: #526b76 }
+#events .range-table td.np-val { color: #e7eff1 }
+#events .range-table td.coll-val { color: #88e7da }
+#events .point, #events .range-line i::after { background: #88e7da }
+#events .point.hollow, #events .range-line i::before {
+  border-color: #e7eff1;
+  background: var(--chart-ink);
+}
+#events .range-line i { background: #86aaa9 }
+#events .range-table .plot-cell {
+  background: repeating-linear-gradient(to right, #3a515d 0 1px, transparent 1px 20%);
+  border-right-color: #3a515d;
+}
+
+#interventions.section { background: #f1f5f4 }
+#interventions .effect-grid, #interventions .native { border-color: var(--rule) }
+#interventions .effect-label, #interventions .forecast div span { color: var(--quiet) }
+#interventions .important strong, #interventions .forecast > div:last-child strong { color: var(--read-accent) }
+#interventions .effect-rail { max-width: none; background: #d5e0e0 }
+#interventions .effect-rail i { background: #617781 }
+#interventions .important .effect-rail i { background: var(--read-accent) }
+#interventions .native { background: #e7efee }
+#interventions .native h3 { max-width: 22ch }
+#interventions .forecast-rule { background: #5d727c }
+#interventions .forecast-rule::after { border-color: #5d727c }
+
+@media (max-width: 640px) {
+  .section[data-ark-depth="moderate"] h2 { font-size: clamp(2.35rem, 8.4vw, 3rem) }
+  #study .modalities { grid-template-columns: 1fr }
+  #study .sample { aspect-ratio: auto }
+  #study .modality h3 { font-size: 1.5rem }
+  #study .modality p { font-size: .975rem; line-height: 1.5 }
+  #events .event-figure { padding-inline: clamp(.7rem, 3.2vw, 1.2rem) }
+  #events .range-table tbody th { font-size: .875rem }
+  #interventions .effect-grid strong { font-size: clamp(3.3rem, 13.2vw, 5rem) }
+}
+
+/* On narrow phones the labeled values retain each comparison at full precision. */
+@media (max-width: 460px) {
+  #events .range-table th:nth-child(3), #events .range-table td.plot-cell { display: none }
+  #events .range-table th:nth-child(1) { width: 44% }
+  #events .range-table th:nth-child(2) { width: 33% }
+  #events .range-table th:nth-child(4) { width: 23% }
+  #events .range-table thead th { font-size: .75rem }
+  #events .range-table :is(.np-val, .coll-val) { font-size: .875rem }
+  #events .range-table .point { display: none }
+  #events .range-table tbody th { overflow-wrap: anywhere }
+}
+
+@media print {
+  .section[data-ark-depth="moderate"] { padding-block: 1.5rem; background: white }
+  #events .event-figure { background: white; color: #172832; border: 1px solid #b8c9cc }
+  #events .event-figure :is(.chart-unit, .fig-note), #events .event-figure .x-axis { color: #344b52 }
+}
+

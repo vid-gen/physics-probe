@@ -1,0 +1,285 @@
+@font-face {
+  font-family: Satoshi;
+  src: url("assets/satoshi-medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+/* The plates keep their original beat. The title now travels 800ms before the old closing cut. */
+.title-sequence {
+  --title-travel-at: 4s;
+  --title-travel-time: 1s;
+}
+.opening {
+  --opening-duration: 5.5s;
+  --plate: #bdc0ce;
+  --lower-plate: #c9cbd5;
+  --ink: #14161d;
+  --annotation: #4b505e;
+  --registration-blue: #4c55b1;
+  display: none;
+}
+.title-sequence .opening {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: block;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--ink);
+}
+.opening-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--plate);
+  animation: uncover-page var(--title-travel-time) var(--title-travel-at) both;
+}
+.opening-lower, .opening-guides, .opening-field, .opening-spine, .opening-lockup { position: absolute }
+.opening-lower {
+  inset: 50% 0 0;
+  background: var(--lower-plate);
+  transform-origin: top;
+  animation: lower-plate var(--opening-duration) both;
+}
+.opening-guides {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: #666b80;
+  animation: register-arcs var(--opening-duration) both;
+}
+.opening-field {
+  left: 0;
+  width: 100%;
+  height: 50%;
+  isolation: isolate;
+  animation: clear-field var(--opening-duration) ease-in-out both;
+}
+.opening-models { top: 0 }
+.opening-physics { top: 50% }
+.opening-word {
+  position: absolute;
+  left: 49%;
+  z-index: 1;
+  display: block;
+  height: auto;
+  translate: -50% -50%;
+  mask-image: linear-gradient(100deg, #000 0 42%, transparent 56%);
+  mask-size: 280% 100%;
+  mask-repeat: no-repeat;
+  animation: expose-ink var(--opening-duration) ease-out both;
+}
+.opening-model-word { top: 45%; width: min(56%,155svh) }
+.opening-physics-word { top: 48%; width: min(24%,70svh); animation-delay: .18s }
+
+.opening-model-plates, .opening-notes { position: absolute; inset: 0; margin: 0; padding: 0 }
+.opening-model-plates img, .opening-notes li {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  translate: -50% -50%;
+}
+.opening-model-plates img {
+  width: var(--width);
+  height: var(--height);
+  object-fit: contain;
+  animation: print-encoder var(--opening-duration) ease-out both;
+}
+.plate-encoder { --x: 15.44224%; --y: 25.42388%; --width: 9.42812vw; --height: 16.19917svh }
+.plate-dit { --x: 78%; --y: 24%; --width: 17vw; --height: 11.4svh }
+.plate-vit { --x: 50%; --y: 73%; --width: 18vw; --height: 15svh }
+.opening-model-plates .plate-dit { animation-delay: .10s }
+.opening-model-plates .plate-vit { animation-delay: .18s }
+.opening-notes {
+  list-style: none;
+  font: 500 clamp(.75rem,1.17vw,1.35rem)/1.2 Satoshi, Inter, sans-serif;
+  letter-spacing: .035em;
+  color: var(--annotation);
+}
+.opening-notes li { white-space: nowrap; animation: print-annotations var(--opening-duration) both }
+.opening-notes li:nth-child(2n) { animation-delay: .08s }
+.opening-notes li:nth-child(3n) { animation-delay: .16s }
+.opening-spine {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: clamp(2rem,7svh,5rem);
+  transform: translateY(-50%);
+  overflow: visible;
+}
+.spine-hair, .spine-engraving, .spine-transfer, .spine-register { transform-origin: 600px 40px }
+.spine-hair { animation: extend-rule var(--opening-duration) both }
+.spine-engraving { animation: close-typebars var(--opening-duration) both }
+.spine-left { animation: advance-teeth var(--opening-duration) both }
+.spine-right { animation: advance-slugs var(--opening-duration) both }
+.spine-transfer { animation: transfer-impression var(--opening-duration) both }
+.spine-register { fill: var(--registration-blue); animation: register-mark var(--opening-duration) both }
+.opening-lockup {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: var(--title-ribbon-height);
+  transform: translateY(-50%);
+}
+.opening-ink {
+  position: absolute;
+  inset: clamp(-2rem,-2.4vh,-.8rem) 0;
+  background: var(--ink);
+  clip-path: polygon(0 0,95.5% 0,97.2% 10%,100% 10%,100% 100%,4.5% 100%,2.8% 90%,0 90%);
+  animation: open-ink var(--opening-duration) both,
+    lift-ink var(--title-travel-time) var(--title-travel-at) both;
+}
+.opening-flight {
+  position: absolute;
+  left: var(--title-end-x);
+  top: var(--title-end-y);
+  width: var(--title-line-width);
+  transform-origin: top left;
+  animation: land-title var(--title-travel-time) cubic-bezier(.42,0,.16,1) var(--title-travel-at) both;
+}
+.opening-title {
+  --letter-fill: var(--frost);
+  font: 400 var(--title-font-size)/var(--title-leading) var(--serif);
+  letter-spacing: var(--title-tracking);
+  text-wrap: var(--title-wrap);
+  animation: unfold-title var(--opening-duration) both, fill-type var(--opening-duration) both;
+}
+.opening-title em {
+  --letter-fill: var(--title-accent,var(--ark-signal));
+  font-weight: inherit;
+  animation: fill-type var(--opening-duration) both;
+}
+.title-sequence #paper-title { visibility: hidden }
+.title-sequence :is(.chapter-nav,.hero-dek,.hero-copy .resources,.cover-authors,.cover-spread) {
+  animation: arrive-cover var(--title-travel-time) var(--title-travel-at) both;
+}
+.title-sequence :is(.hero-dek,.hero-copy .resources) { animation-name: arrive-copy }
+@keyframes land-title {
+  from { transform: translate(var(--title-from-x),var(--title-from-y)) scale(var(--title-from-scale)) }
+  88%, 100% { transform: none }
+}
+@keyframes lift-ink {
+  0% { opacity: 1 }
+  48%, 100% { opacity: 0 }
+}
+@keyframes uncover-page {
+  0% { opacity: 1 }
+  42% { opacity: .36 }
+  83%, 100% { opacity: 0 }
+}
+@keyframes arrive-cover {
+  0%, 21% { opacity: 0 }
+  100% { opacity: 1 }
+}
+@keyframes arrive-copy {
+  0%, 74% { opacity: 0 }
+  100% { opacity: 1 }
+}
+@keyframes lower-plate {
+  0%, 6% { transform: scaleY(0) }
+  15%, 100% { transform: scaleY(1) }
+}
+@keyframes register-arcs {
+  0%, 8% { opacity: 0; transform: scale(1.1) }
+  24%, 49% { opacity: .77; transform: scale(1) }
+  63%, 100% { opacity: .32; transform: scale(1.035) }
+}
+@keyframes clear-field {
+  0%, 47% { opacity: 1 }
+  58%, 100% { opacity: 0 }
+}
+@keyframes expose-ink {
+  0%, 12% { mask-position: 100% 0; opacity: 0 }
+  19% { opacity: 1 }
+  33%, 100% { mask-position: 0 0; opacity: 1 }
+}
+@keyframes print-encoder {
+  0%, 16% { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(.65rem) }
+  36%, 100% { opacity: 1; clip-path: inset(0); transform: none }
+}
+@keyframes print-annotations {
+  0%, 20% { opacity: 0; transform: translateY(.4em) }
+  33%, 100% { opacity: 1; transform: none }
+}
+@keyframes extend-rule {
+  0%, 5% { transform: scale(0,1) }
+  14% { transform: scale(.62,1.7) }
+  44% { transform: scale(.81,1.7) }
+  54% { transform: scale(1.02,3) }
+  59% { transform: scale(.79,7) }
+  64%, 100% { transform: scale(0,.5) }
+}
+@keyframes close-typebars {
+  0%, 14% { opacity: 0; transform: scale(.84,.05) }
+  23% { opacity: 1; transform: scale(.9,.48) }
+  47% { opacity: 1; transform: scale(.97,.58) }
+  54% { opacity: 1; transform: scale(1.02,1.05) }
+  60% { opacity: 1; transform: scale(.86,1.7) }
+  65%, 100% { opacity: 0; transform: scale(.68,.04) }
+}
+@keyframes advance-teeth {
+  0%, 14% { transform: translateX(-62px); clip-path: inset(0 100% 0 0) }
+  30% { transform: translateX(-18px); clip-path: inset(0) }
+  49% { transform: translateX(0) }
+  57% { transform: translateX(92px) }
+  64%, 100% { transform: translateX(180px) }
+}
+@keyframes advance-slugs {
+  0%, 17% { transform: translateX(65px); clip-path: inset(0 0 0 100%) }
+  32% { transform: translateX(25px); clip-path: inset(0) }
+  50% { transform: translateX(0) }
+  58% { transform: translateX(-116px) }
+  64%, 100% { transform: translateX(-165px) }
+}
+@keyframes register-mark {
+  0%, 17% { opacity: 0; transform: scale(.3) }
+  23%, 48% { opacity: 1; transform: scale(1) }
+  57% { opacity: 1; transform: scale(1,2.5) }
+  61%, 100% { opacity: 0; transform: scale(.25,0) }
+}
+@keyframes transfer-impression {
+  0%, 53% { opacity: 0; transform: scale(1.05,.006) }
+  56% { opacity: 1; transform: scale(1.02,.4) }
+  59% { opacity: 1; transform: scale(.87,1.15) }
+  62.5%, 100% { opacity: 0; transform: scale(.65,.015) }
+}
+/* The same axis first carries type at near-zero height, then opens behind the glyphs. */
+@keyframes unfold-title {
+  0%, 57% { opacity: 0; transform: scale(1.19,.007) }
+  59% { opacity: 1; transform: scale(1.19,.016) }
+  62% { opacity: 1; transform: scale(1.1,.35) }
+  67% { transform: scale(.99,1.025) }
+  70%, 100% { opacity: 1; transform: none }
+}
+@keyframes open-ink {
+  0%, 59% { transform: scale(0,.006) }
+  63% { transform: scale(.85,.015) }
+  68% { transform: scale(1,1.015) }
+  71%, 100% { transform: none }
+}
+@keyframes fill-type {
+  0%, 62% { color: var(--ink) }
+  67%, 100% { color: var(--letter-fill) }
+}
+
+@media (max-width: 680px) and (orientation: portrait) {
+  .opening-model-word { width: 93%; left: 50%; top: 45% }
+  .opening-physics-word { width: 57%; left: 50%; top: 48% }
+  .plate-encoder { --x: 18%; --y: 23.5%; --width: 28.4vw; --height: 17svh }
+  .plate-dit { --x: 76%; --y: 23%; --width: 38vw; --height: 11.5svh }
+  .plate-vit { --width: 43vw; --height: 14svh; --y: 74% }
+  .opening-notes { font-size: clamp(.65rem,2.65vw,.83rem); letter-spacing: .02em }
+  .opening-notes li { left: var(--compact-x); top: var(--compact-y) }
+}
+@media (max-height: 490px) and (orientation: landscape) {
+  .opening-notes { font-size: clamp(.6rem,1.28vw,.76rem) }
+}
+.title-sequence.intro-paused .opening *,
+.title-sequence.intro-paused :is(.chapter-nav,.hero-dek,.hero-copy .resources,.cover-authors,.cover-spread) {
+  animation-play-state: paused;
+}
+@media print {
+  .title-sequence .opening { display: none; animation: none }
+  .title-sequence #paper-title { visibility: visible }
+  .title-sequence :is(.chapter-nav,.hero-dek,.hero-copy .resources,.cover-authors,.cover-spread) { animation: none }
+}

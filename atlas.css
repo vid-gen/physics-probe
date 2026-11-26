@@ -1,0 +1,175 @@
+/* The homepage supplies the backdrop and the height of the two illustrations. */
+.hero-atlas {
+  --atlas-cream: #f6efdf;
+  --atlas-active: #ffb97c;
+  width: 100%;
+  min-inline-size: 0;
+  min-block-size: 0;
+  align-self: stretch;
+  display: grid;
+  container: atlas / inline-size;
+  color: var(--atlas-cream);
+}
+.hero-atlas .atlas-body {
+  display: grid;
+  grid-template-columns: minmax(0,1.46fr) minmax(0,1fr);
+  column-gap: clamp(4px,1.5cqw,20px);
+  align-items: center;
+  min-width: 0;
+  min-height: 0;
+}
+.hero-atlas .atlas-field {
+  align-self: stretch;
+  min-width: 0;
+  min-height: 0;
+  container-type: size;
+  display: grid;
+  place-items: center;
+}
+.hero-atlas .atlas-dial {
+  position: relative;
+  width: min(100cqw,100cqh);
+  aspect-ratio: 1;
+  container-type: inline-size;
+  isolation: isolate;
+}
+.hero-atlas .atlas-dial canvas, .hero-atlas .atlas-marks, .hero-atlas .atlas-stations {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero-atlas .atlas-marks { opacity: .78; pointer-events: none }
+.hero-atlas .atlas-stations { pointer-events: none }
+.hero-atlas .atlas-station {
+  --socket-size: clamp(16px,5.25cqw,34px);
+  display: grid;
+  place-items: center;
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%,-50%);
+  width: max(32px,var(--socket-size));
+  height: max(32px,var(--socket-size));
+  border: 0;
+  padding: 0;
+  border-radius: 50%;
+  color: color-mix(in srgb,var(--tone) 70%,#ede8d9);
+  background: transparent;
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
+  opacity: var(--station-in,1);
+}
+.hero-atlas .atlas-socket {
+  display: grid;
+  place-items: center;
+  width: var(--socket-size);
+  height: var(--socket-size);
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb,var(--tone) 49%,#14242b);
+  background: #14232b;
+  box-shadow: 0 0 0 2px #10202ac9;
+  transition: background .25s, box-shadow .35s, transform .35s;
+}
+.hero-atlas .atlas-socket svg {
+  display: block;
+  width: 60%;
+  height: 60%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.45;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hero-atlas .atlas-station:hover .atlas-socket { border-color: currentColor; transform: scale(1.12) }
+.hero-atlas .atlas-station:focus-visible { outline: 2px solid var(--tone); outline-offset: 2px }
+.hero-atlas .atlas-station[aria-pressed="true"] .atlas-socket {
+  color: #13202a;
+  border-color: #fff1cf;
+  background: var(--tone);
+  box-shadow: 0 0 0 2px #13212c,0 0 0 3px var(--tone),0 0 15px color-mix(in srgb,var(--tone) 62%,transparent);
+}
+.hero-atlas .atlas-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 36%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  pointer-events: none;
+  opacity: var(--core-in,1);
+}
+.hero-atlas .atlas-number {
+  display: inline-block;
+  padding-right: .12em;
+  font: 400 17.5cqw/.91 var(--serif,Georgia,serif);
+  font-variant-numeric: lining-nums;
+  letter-spacing: -.087em;
+  white-space: nowrap;
+  color: #f7ecd4;
+}
+.hero-atlas .atlas-plus {
+  display: inline-block;
+  font-size: .45em;
+  font-weight: 350;
+  line-height: 1;
+  vertical-align: top;
+  margin: .08em 0 0 .08em;
+}
+.hero-atlas .atlas-core-label {
+  display: block;
+  margin-top: 1.45cqw;
+  color: #dedfd1;
+  font: 540 clamp(6.2px,1.65cqw,12px)/1.3 var(--body,Arial,sans-serif);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.hero-atlas .atlas-folio { min-width: 0; container-type: inline-size }
+.hero-atlas .atlas-specimen { width: clamp(58px,43cqw,150px); aspect-ratio: 2; margin: 0 0 .25rem -3px; color: var(--atlas-active) }
+.hero-atlas .atlas-specimen svg { width: 100%; height: 100%; display: block }
+.hero-atlas .atlas-title {
+  font: 420 clamp(26px,18cqw,70px)/1.03 var(--serif,Georgia,serif);
+  letter-spacing: -.063em;
+  color: var(--atlas-cream);
+  text-transform: none;
+  text-wrap: balance;
+  margin: 0;
+}
+.hero-atlas .atlas-title.atlas-long { font-size: clamp(23px,15.5cqw,58px) }
+.hero-atlas .atlas-names {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: .32rem .7rem;
+  margin: clamp(8px,6cqw,21px) 0 0;
+  padding: clamp(7px,3.5cqw,14px) 0 0;
+  border-top: 1px solid #b5c8c940;
+}
+.hero-atlas .atlas-names li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .32em;
+  color: #e9e9de;
+  font: 510 clamp(11px,5.4cqw,16px)/1.45 var(--body,Arial,sans-serif);
+  letter-spacing: -.02em;
+}
+.hero-atlas .atlas-names li::before { content: ""; width: .28em; height: .28em; flex: none; align-self: center; border-radius: 50%; background: var(--atlas-active) }
+@media (max-width: 800px) {
+  .hero-atlas .atlas-field { container-type: normal }
+  .hero-atlas .atlas-dial { width: 100%; max-width: 410px }
+  @container atlas (max-width: 445px) {
+    .hero-atlas .atlas-body { grid-template-columns: 1fr; row-gap: 4px }
+    .hero-atlas .atlas-dial { width: min(100%,335px) }
+    .hero-atlas .atlas-folio { display: grid; grid-template-columns: minmax(0,1fr) 76px; align-items: center; min-height: 112px; align-content: start }
+    .hero-atlas .atlas-specimen { grid-column: 2; grid-row: 1; width: 75px; margin: 0; justify-self: end }
+    .hero-atlas .atlas-title { grid-column: 1; grid-row: 1; font-size: clamp(32px,10cqw,43px) }
+    .hero-atlas .atlas-title.atlas-long { font-size: clamp(28px,8.3cqw,37px) }
+    .hero-atlas .atlas-names { grid-column: 1/-1; margin-top: 8px; padding-top: 8px }
+    .hero-atlas .atlas-names li { font-size: .825rem }
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero-atlas .atlas-socket { transition: none }
+}

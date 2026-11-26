@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en" data-ark-theme="exa" data-ark-depth="maximal">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What Do Foundation Models Know About Physics?</title>
+  <meta name="citation_title" content="What Do Foundation Models Know About Physics?">
+  <meta name="citation_author" content="Meng Wang">
+  <meta name="citation_author_institution" content="National University of Singapore">
+  <meta name="citation_author" content="Mingyang Bao">
+  <meta name="citation_author_institution" content="National University of Singapore">
+  <meta name="citation_author" content="Jason Li">
+  <meta name="citation_author_institution" content="Nanyang Technological University">
+  <meta name="citation_author" content="Shengqiong Wu">
+  <meta name="citation_author_institution" content="University of Oxford">
+  <meta name="citation_author" content="Hao Fei">
+  <meta name="citation_author_institution" content="University of Oxford">
+  <meta name="description" content="A multimodal study of the physical information foundation models encode, how it transfers, and which signals their predictions use.">
+  <meta name="theme-color" content="#101b29">
+  <meta property="og:title" content="What Do Foundation Models Know About Physics?">
+  <meta property="og:description" content="From frozen representations to physical predictions. Research by Meng Wang, Mingyang Bao, Jason Li, Shengqiong Wu, and Hao Fei.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/mark.svg">
+  <script>
+    (() => {
+      if (location.hash) return;
+      const replay = new URLSearchParams(location.search).has('intro');
+      const returning = performance.getEntriesByType('navigation')[0]?.type === 'back_forward';
+      if (!replay && (returning || matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+      const classes = document.documentElement.classList;
+      if (replay) classes.add('intro-requested');
+      classes.add('title-sequence', 'intro-paused');
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=intro-entry-2">
+  <link rel="stylesheet" href="exhibit.css">
+  <link rel="stylesheet" href="opening.css?v=intro-entry-2">
+  <link rel="stylesheet" href="reading.css">
+  <link rel="stylesheet" href="painting.css">
+  <link rel="stylesheet" href="atlas.css">
+</head>
+<body>
+  <div class="opening" aria-hidden="true">
+    <div class="opening-backdrop">
+    <div class="opening-lower"></div>
+    <svg class="opening-guides" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" fill="none" focusable="false">
+      <g stroke="currentColor" stroke-width=".85" stroke-dasharray="1 5"><circle cx="600" cy="-513" r="842"/><circle cx="600" cy="1213" r="842"/></g>
+      <path stroke="currentColor" stroke-width=".9" d="M35 54h14m-7-7v14m1109-7h14m-7-7v14M35 646h14m-7-7v14m1109-7h14m-7-7v14"/>
+    </svg>
+    <div class="opening-field opening-models">
+      <div class="opening-model-plates">
+        <img class="plate-encoder" src="assets/opening-encoder-decoder.svg" alt="">
+        <img class="plate-dit" src="assets/opening-dit.svg" alt="">
+        <img class="plate-vit" src="assets/opening-vit.svg" alt="">
+      </div>
+      <img class="opening-word opening-model-word" src="assets/opening-foundation-word.svg" width="1468" height="100" alt="Foundation Models">
+    </div>
+    <div class="opening-field opening-physics">
+      <ul class="opening-notes">
+        <li style="--x: 12.28545%; --y: 27.98466%; --compact-x: 11%; --compact-y: 25%">MASS</li>
+        <li style="--x: 29%; --y: 66%; --compact-x: 23%; --compact-y: 65%">MATERIAL</li>
+        <li style="--x: 69%; --y: 42%; --compact-x: 76%; --compact-y: 35%">FRICTION</li>
+        <li style="--x: 35.45472%; --y: 17.73592%; --compact-x: 35.5%; --compact-y: 18%">VELOCITY</li>
+        <li style="--x: 48%; --y: 28%; --compact-x: 49%; --compact-y: 30%">POSITION</li>
+        <li style="--x: 63.63693%; --y: 19.04683%; --compact-x: 67%; --compact-y: 16%">DISPLACEMENT</li>
+        <li style="--x: 81%; --y: 59%; --compact-x: 84%; --compact-y: 62%">DIRECTION</li>
+        <li style="--x: 15%; --y: 81%; --compact-x: 14%; --compact-y: 81%">ROTATION</li>
+        <li style="--x: 26%; --y: 48%; --compact-x: 10%; --compact-y: 46%">DEPTH</li>
+        <li style="--x: 43%; --y: 82%; --compact-x: 44%; --compact-y: 89%">NON-PENETRATION</li>
+        <li style="--x: 56%; --y: 66%; --compact-x: 53%; --compact-y: 66%">COLLISION</li>
+        <li style="--x: 72%; --y: 82%; --compact-x: 74%; --compact-y: 78%">CONSISTENCY</li>
+        <li style="--x: 84.89293%; --y: 26.2976%; --compact-x: 86%; --compact-y: 22%">INTERACTION</li>
+      </ul>
+      <img class="opening-word opening-physics-word" src="assets/opening-physics-word.svg" width="573" height="100" alt="Physics">
+    </div>
+    <svg class="opening-spine" viewBox="0 0 1200 80" preserveAspectRatio="none" fill="currentColor" focusable="false">
+      <defs><pattern id="opening-hatch" patternUnits="userSpaceOnUse" width="7" height="6"><path d="M0 0h2v6H0z"/></pattern></defs>
+      <path class="spine-hair" d="M10 39.5h1180v1H10z"/>
+      <g class="spine-engraving">
+        <g class="spine-left">
+          <path d="M30 17v46h1V17zm8 11v24h2V28zm10-5v34h2V23zm11 5v24h3V28zm12-5v34h3V23zm13 5v24h4V28zm14-5v34h5V23zm15 5v24h6V28zm17-5v34h8V23zm19 5v24h10V28zm22-5v34h13V23zm26 5v24h17V28zm32-5v34h24V23zm39 5v24h34V28z"/>
+          <path d="M319 26h106l14 14-14 14H319z"/>
+        </g>
+        <g class="spine-right">
+          <path d="M747 26h121v28H733V40zm135 0h66v28h-66zm79 0h42v28h-42zm57 0h25v28h-25zm40 0h15v28h-15zm30 0h8v28h-8zm22 0h4v28h-4zm17 0h2v28h-2z"/>
+          <path d="m1145 53 15-27h7v27z"/>
+        </g>
+      </g>
+      <g class="spine-transfer">
+        <path fill="url(#opening-hatch)" d="M248 40 299-13h93v53zm157 0v-87h38v87zm349 0h42v92h-42zm55 0h150l-54 53h-96z"/>
+        <path d="M449-47h3v87h-3zm299 87h2v92h-2zm-168-34h7v34h-7zm15 34h12v42h-12zm19-55h3v55h-3z"/>
+      </g>
+      <path class="spine-register" d="M582 40l9-9h13l-9 9zm18 8 9-9h9l-9 9z"/>
+    </svg>
+    </div>
+    <div class="opening-lockup">
+      <div class="opening-ink"></div>
+    </div>
+    <div class="opening-flight"><div class="opening-title"></div></div>
+  </div>
+  <div class="site" id="top">
+    <a class="skip" href="#study">Skip to the study</a>
+    <nav class="chapter-nav" aria-label="Paper contents">
+      <div class="chapter-inner">
+        <ol><li><a href="#overview"><i aria-hidden="true"></i><span>Cover</span></a></li><li><a href="#study"><i aria-hidden="true"></i><span>Study</span></a></li><li><a href="#observations"><i aria-hidden="true"></i><span>Controls</span></a></li><li><a href="#events"><i aria-hidden="true"></i><span>Events</span></a></li><li><a href="#interventions"><i aria-hidden="true"></i><span>Interventions</span></a></li></ol>
+      </div>
+    </nav>
+    <main>
+      <section class="hero" id="overview" aria-labelledby="paper-title">
+        <svg class="exhibit-chart" viewBox="0 0 1440 650" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true">
+          <g class="chart-arcs" stroke="currentColor">
+            <ellipse cx="1040" cy="349" rx="593" ry="218" transform="rotate(-16 1040 349)"/>
+            <ellipse cx="1040" cy="349" rx="557" ry="253" transform="rotate(-16 1040 349)" stroke-dasharray="1 8"/>
+            <ellipse cx="1038" cy="339" rx="426" ry="291" transform="rotate(19 1038 339)"/>
+            <path d="M-32 560C257 529 535 398 763 224S1290-25 1480 87" stroke-dasharray="2 9"/>
+          </g>
+          <g class="chart-stars" fill="currentColor">
+            <path d="m705 73 1.2 5.8L712 80l-5.8 1.2L705 87l-1.2-5.8L698 80l5.8-1.2zM1261 539l1.5 6.5 6.5 1.5-6.5 1.5-1.5 6.5-1.5-6.5-6.5-1.5 6.5-1.5z"/>
+            <circle cx="384" cy="82" r="1.4"/><circle cx="538" cy="508" r="1.8"/><circle cx="573" cy="386" r="1.5"/><circle cx="1382" cy="383" r="2.4"/><circle cx="1081" cy="43" r="1.7"/>
+          </g>
+        </svg>
+        <div class="shell cover-layout">
+          <div class="hero-copy">
+            <h1 id="paper-title">What Do <em class="foundation-accent">Foundation Models</em> Know About <em>Physics?</em></h1>
+            <p class="hero-dek">We probe vision, touch, and sound to find which physical signals models encode, how those signals transfer, and which ones drive a prediction.</p>
+            <div class="resources" role="group" aria-label="Project resources">
+              <div class="resource-row">
+                <button type="button" disabled title="Paper on arXiv, coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h4M9 12h6m-6 4h6"/></svg> arXiv</button>
+                <button type="button" disabled title="Code on GitHub, coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7.5 7-5 5 5 5m9-10 5 5-5 5M14 5l-4 14"/></svg> GitHub</button>
+                <button type="button" disabled title="Model, coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7zM3 7l9 5 9-5m-9 5v10"/></svg> Model</button>
+              </div>
+            </div>
+          </div>
+          <div class="cover-spread">
+            <figure class="cover-painting" aria-label="Physical probing in the workshop">
+              <div class="cover-painting__paper">
+                <img src="assets/workshop.webp" srcset="assets/workshop-small.webp 756w, assets/workshop.webp 1512w" sizes="(max-width: 800px) 92vw, 42vw" fetchpriority="high" width="1512" height="1009" alt="A ball rolls down a ramp as a robotic hand touches a block. Below, observers record the scene with a camera, a drawing and a microphone.">
+              </div>
+              <ol class="cover-painting__questions" aria-label="Physical concepts shown">
+                <li class="cover-painting__properties"><b aria-hidden="true">1</b> Properties</li>
+                <li class="cover-painting__states"><b aria-hidden="true">2</b> States</li>
+                <li class="cover-painting__dynamics"><b aria-hidden="true">3</b> Dynamics</li>
+                <li class="cover-painting__events"><b aria-hidden="true">4</b> Events</li>
+                <li class="cover-painting__prediction"><b aria-hidden="true">5</b> Prediction</li>
+              </ol>
+              <ul class="cover-painting__senses" aria-label="Input modalities shown">
+                <li class="cover-painting__vision">vision</li>
+                <li class="cover-painting__touch">touch</li>
+                <li class="cover-painting__sound">sound</li>
+              </ul>
+            </figure>
+            <div class="hero-atlas" data-model-atlas></div>
+          </div>
+          <div class="cover-authors" id="paper-authors" aria-labelledby="author-heading">
+            <h2 id="author-heading">Authors</h2>
+            <div class="people">
+              <p class="author-list"><span>Meng Wang<sup>1</sup></span> <span>Mingyang Bao<sup>1</sup></span> <span>Jason Li<sup>2</sup></span> <span>Shengqiong Wu<sup>3*</sup></span> <span>Hao Fei<sup>3</sup></span></p>
+              <p class="affils"><span><sup>1</sup> National University of Singapore</span><span><sup>2</sup> Nanyang Technological University</span><span><sup>3</sup> University of Oxford</span><span class="author-note">* Corresponding author</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-ark-depth="moderate" class="study section" id="study" aria-labelledby="study-title"><div class="shell">
+        <p class="overline"><span class="bars" aria-hidden="true"></span>Study design</p>
+        <div class="study-heading"><h2 id="study-title">Reading physics from<br><em>frozen features.</em></h2>
+          <p class="body-intro">A frozen encoder turns images, touch, or sound into features. A small readout measures which physical properties those features reveal. Changing the observations and editing the features test how far that evidence carries.</p>
+        </div>
+        <div class="modalities">
+          <figure class="modality"><div class="sample"><img src="assets/vision.webp" alt="Optical photograph of a perforated surface, RCT material 0701420" loading="lazy"><span class="crop-mark"></span></div>
+            <figcaption><h3>Vision</h3><p>All 16 visual models recover object mass. Their errors range from 0.71 to 1.34 bits, against 3.42 bits for a constant prediction.</p></figcaption></figure>
+          <figure class="modality"><div class="sample"><img src="assets/touch.webp" alt="Colored contact imprint from the same perforated surface, RCT sensor 1, frame 15" loading="lazy"><span class="crop-mark"></span></div>
+            <figcaption><h3>Touch</h3><p>SPARSH-MAE distinguishes materials by touch at 0.949 AUROC. I-JEPA, trained on images, reaches 0.947.</p></figcaption></figure>
+          <figure class="modality"><div class="sample"><img src="assets/sound.webp" alt="Spectrogram of the first 300 milliseconds of a RealImpact recording, with time increasing to the right and frequency upward" loading="lazy"><span class="crop-mark"></span></div>
+            <figcaption><h3>Sound</h3><p>Material discrimination from impact sounds reaches 0.736 mean AUROC. A random-weight audio encoder reaches 0.704.</p></figcaption></figure>
+        </div>
+        <p class="media-note">The photograph and contact imprint show the same <a href="https://faerber-lab.github.io/RCT/">RCT</a> material. The spectrogram shows the first 300 ms of a <a href="https://samuelpclarke.com/realimpact/">RealImpact</a> recording.</p>
+      </div></section>
+
+      <section data-ark-depth="moderate" id="observations" class="observations section" aria-labelledby="obs-title"><div class="shell obs-layout">
+        <div class="obs-copy"><p class="overline"><span class="bars" aria-hidden="true"></span>Observation controls</p>
+          <h2 id="obs-title">Same mass.<br><em>Different shape.</em></h2>
+          <p>A box-trained mass readout falls below the mean baseline on cylinders. Fitting the readout to cylinder features restores its score. The encoder stays frozen throughout.</p>
+        </div>
+        <figure class="transfer"><figcaption><span>Mass readout under a shape change</span><small>V-JEPA 2.1 · Test R²</small></figcaption>
+          <div class="bar-chart">
+            <div class="bar-row"><span>Original boxes</span><div class="bar-track t-box"><i style="--start:40%;--length:56.76%"></i></div><b>0.946</b></div>
+            <div class="bar-row"><span>Cylinders · fixed</span><div class="bar-track t-fixed"><i style="--start:6.76%;--length:33.24%"></i></div><b>−0.554</b></div>
+            <div class="bar-row"><span>Cylinders · refit</span><div class="bar-track t-refit"><i style="--start:40%;--length:56.94%"></i></div><b>0.949</b></div>
+            <div class="bar-axis" aria-hidden="true"><span>−0.5</span><span>0</span><span>0.5</span><span>1.0</span></div>
+          </div>
+          <p class="fig-note">Fixed uses the original readout. Refit learns a new readout on the changed observations. A negative R² scores below a constant mean prediction.</p>
+        </figure>
+        <figure class="matched"><figcaption><h3>Matched trajectories</h3><p>Two shapes slide under the same applied force. The camera and sampling times are identical.</p><dl><div><dt>Mass</dt><dd>0.50 kg</dd></div><div><dt>Force</dt><dd>3.0 N</dd></div></dl></figcaption>
+          <div class="frames"><div class="time-labels"><span>0.00 s</span><span>0.47 s</span><span>1.00 s</span></div>
+            <div class="frame-label">Box</div><img src="assets/genesis-box.webp" alt="Three aligned frames show a blue box sliding to the right." width="676" height="128" loading="lazy">
+            <div class="frame-label">Cylinder</div><img src="assets/genesis-cylinder.webp" alt="A blue cylinder follows the same displacement over the three sample times." width="676" height="128" loading="lazy">
+          </div>
+        </figure>
+        <aside class="last-frame"><div class="last-figure"><strong>0.951–0.995</strong><span>Test R² · mean speed</span></div><p><b>One frame carries a surprising amount of motion information.</b> Across six models on Genesis trajectories, a readout refit on the final frame alone recovers mean speed. Refitting on the first frame yields little signal.</p></aside>
+      </div></section>
+
+      <section data-ark-depth="moderate" class="events section" id="events" aria-labelledby="events-title"><div class="shell">
+        <p class="overline on-dark"><span class="bars" aria-hidden="true"></span>Event judgments</p>
+        <div class="event-head"><h2 id="events-title">Seeing a collision.<br><em>Judging a violation.</em></h2>
+          <p>All six models expose evidence of observed collisions. Judging whether solid objects pass through each other stays close to chance across the same models.</p></div>
+        <figure class="event-figure"><figcaption><span>Event readout performance</span><span class="chart-unit">AUROC · higher is better</span></figcaption>
+          <table class="range-table"><thead><tr><th scope="col">Model</th><th scope="col" class="metric-np"><span class="point hollow"></span><span>Non-penetration</span></th><th scope="col" aria-hidden="true"><div class="x-axis"><span>.50</span><span>.60</span><span>.70</span><span>.80</span><span>.90</span><span>1.0</span></div></th><th scope="col" class="metric-coll"><span class="point"></span><span>Collision</span></th></tr></thead><tbody>
+            <tr><th scope="row">DINOv3 <small>ViT-L/16</small></th><td class="np-val">0.518</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:3.6%;--hi:71.2%"><i></i></div></td><td class="coll-val">0.856</td></tr>
+            <tr><th scope="row">V-JEPA 2.1 <small>ViT-L</small></th><td class="np-val">0.547</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:9.4%;--hi:93.8%"><i></i></div></td><td class="coll-val">0.969</td></tr>
+            <tr><th scope="row">Qwen3-VL <small>8B · visual</small></th><td class="np-val">0.540</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:8.0%;--hi:63.0%"><i></i></div></td><td class="coll-val">0.815</td></tr>
+            <tr><th scope="row">VGGT <small>1B</small></th><td class="np-val">0.549</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:9.8%;--hi:65.2%"><i></i></div></td><td class="coll-val">0.826</td></tr>
+            <tr><th scope="row">LTX-2.5</th><td class="np-val">0.552</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:10.4%;--hi:80.8%"><i></i></div></td><td class="coll-val">0.904</td></tr>
+            <tr><th scope="row">Cosmos-Predict2.5 <small>2B</small></th><td class="np-val">0.585</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:17.0%;--hi:77.2%"><i></i></div></td><td class="coll-val">0.886</td></tr>
+          </tbody></table>
+          <p class="fig-note">Non-penetration uses IntPhys2 physical-consistency judgments. Collision recognition uses Something-Something v2. Chance AUROC is 0.50.</p>
+        </figure>
+      </div></section>
+
+      <section data-ark-depth="moderate" class="interventions section" id="interventions" aria-labelledby="inter-title"><div class="shell">
+        <p class="overline"><span class="bars" aria-hidden="true"></span>Feature interventions</p>
+        <div class="inter-head"><h2 id="inter-title">Which signals change<br><em>a prediction?</em></h2><p>In 48 eligible tests across six models and three scenes, we remove features associated with a physical variable and measure the change in a fixed predictor’s performance.</p></div>
+        <div class="effect-grid">
+          <div class="effect important"><p>Governing parameters &amp; speed</p><strong><span>≥</span>64<small>%</small></strong><div class="effect-rail"><i style="width:64%"></i></div><p class="effect-label">of the oracle performance drop after deletion</p></div>
+          <div class="effect control"><p>Position &amp; orientation controls</p><strong><span>≤</span>2<small>%</small></strong><div class="effect-rail"><i style="width:2%"></i></div><p class="effect-label">of the oracle performance drop after deletion</p></div>
+        </div>
+        <p class="effect-note">The oracle measures the drop in future-prediction R² after erasing features associated with the future target itself. Position and orientation are readily decoded, yet deleting their components has little effect on these predictions.</p>
+        <div class="native"><div><p class="overline">Frozen V-JEPA 2.1 predictor</p><h3>Editing friction-linked features shifts the forecast.</h3><p>Deleting friction-linked features reduces future-displacement R². Deleting position changes it by less than 0.01. Friction and terminal speed covary in these trajectories, so either can contribute to the effect.</p></div>
+          <div class="forecast"><div><strong>0.97</strong><span>Original</span></div><span class="forecast-rule" aria-hidden="true"></span><div><strong>0.79</strong><span>Friction-linked edit</span></div></div></div>
+      </div></section>
+    </main>
+    <footer><div class="shell footer-inner"><a class="brand" href="#top"><svg class="brand-symbol" viewBox="0 0 44 44" fill="none" aria-hidden="true"><circle cx="22" cy="22" r="15" stroke="currentColor" stroke-width="1.05"/><ellipse cx="22" cy="22" rx="21" ry="7" transform="rotate(-35 22 22)" stroke="currentColor" stroke-width="1.1"/><path d="m22 12 2 8 8 2-8 2-2 8-2-8-8-2 8-2z" fill="currentColor"/></svg><span>Physical Probing</span></a><p>What Do Foundation Models Know About Physics?</p><span class="footer-year">2026</span></div></footer>
+  </div>
+  <script src="presentation.js?v=intro-entry-2"></script>
+  <script src="atlas.js"></script>
+</body></html>
