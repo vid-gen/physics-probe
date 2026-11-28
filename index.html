@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="styles.css?v=trajectory-video">
   <link rel="stylesheet" href="exhibit.css?v=footer-row">
   <link rel="stylesheet" href="opening.css?v=intro-entry-2">
-  <link rel="stylesheet" href="reading.css?v=solid-klein-markers">
+  <link rel="stylesheet" href="reading.css?v=paper-findings">
   <link rel="stylesheet" href="painting.css">
   <link rel="stylesheet" href="atlas.css">
 </head>
@@ -181,11 +181,11 @@
           <aside class="intro-findings" aria-labelledby="intro-findings-title">
             <h3 id="intro-findings-title">Main findings</h3>
             <ol>
-              <li><span>F1</span><p>Object properties are broadly recoverable. Discriminative and latent-predictive models outperform pixel generators on these tasks. Greater depth and scale give no consistent advantage.</p></li>
-              <li><span>F2</span><p>Temporal models better expose motion and dynamical factors, while geometry models lead on motion along the depth axis. Position and physical parameters are easier to recover than velocity.</p></li>
-              <li><span>F3</span><p>Final-frame cues can reveal physical quantities. Changes in frame order, viewpoint or shape can disrupt a fixed readout even when a newly fitted readout recovers the information.</p></li>
-              <li><span>F4</span><p>Predictive and generative video models better support event judgment and future prediction. Even models that recognize collisions struggle to judge whether solid objects pass through one another.</p></li>
-              <li><span>F5</span><p>Prediction dependence follows a variable’s causal role in the tested settings. Erasing position- or orientation-linked features barely changes future readouts. Editing features linked to mass, friction, speed or rotation changes predictions, with effects also observed in a frozen V-JEPA predictor.</p></li>
+              <li><span>F1</span><p><strong>Object properties are broadly recoverable.</strong> Discriminative and latent-predictive models generally outperform pixel generators on these tasks. Greater depth and scale give no consistent advantage.</p></li>
+              <li><span>F2</span><p><strong>Position is easier to recover than velocity.</strong> Temporal models better expose lateral and rotational motion and dynamical factors. Geometry models lead on motion along the depth axis.</p></li>
+              <li><span>F3</span><p><strong>Physical information can survive a change that breaks its readout.</strong> Final frames carry cues to mass, speed and friction. Changes in frame order, viewpoint or shape can require refitting the probe.</p></li>
+              <li><span>F4</span><p><strong>Models that recognize collisions still struggle with non-penetration.</strong> Predictive and generative video models better support several event judgments and future-motion readouts.</p></li>
+              <li><span>F5</span><p><strong>Forecasts depend selectively on physical cues.</strong> Editing features linked to governing parameters or speed changes future-motion predictions. Erasing readable position or orientation cues has little effect. We also find this selectivity in a frozen V-JEPA predictor.</p></li>
             </ol>
           </aside>
         </div>
@@ -195,12 +195,12 @@
         <header class="probe-heading">
           <div><p class="overline"><span class="bars" aria-hidden="true"></span>Experimental protocol</p>
             <h2 id="settings-title">Evaluation Settings</h2></div>
-          <p class="probe-intro">We study more than 30 foundation models using images, video, touch and sound. For the moving-box experiments, the simulator gives us ground truth for quantities such as mass, speed and friction. We can change what a model sees while keeping the underlying physics fixed.</p>
+          <p class="probe-intro"><strong>A successful mass probe shows that the model’s features contain information about mass.</strong> Testing whether that readout transfers to a new view, or whether a motion forecast uses those features, takes two further experiments. The evaluation spans more than 30 foundation models.</p>
         </header>
         <div class="method-cards">
-          <article class="method-card"><h3>Frozen Representation Probing</h3><p>Keep the foundation model fixed and train a small readout on its features. Can the readout estimate the mass of a box on a held-out trial?</p></article>
-          <article class="method-card"><h3>Input Controls</h3><p>Show the same motion from another angle or give the model only the final frame. Test the original readout, then fit a new one to see what information survives the change.</p></article>
-          <article class="method-card"><h3>Representation Interventions</h3><p>Remove or exchange features associated with a quantity such as friction. Hold the predictor fixed and measure how far its forecast moves.</p></article>
+          <article class="method-card"><h3>Frozen Representation Probing</h3><p>We train a small readout on frozen features. If it estimates a box’s mass on held-out trials, those features carry information about mass.</p></article>
+          <article class="method-card"><h3>Input Controls</h3><p>We change the frames, viewpoint or object shape. A fixed readout tests transfer. A readout fitted to the changed inputs tests how much information is still recoverable.</p></article>
+          <article class="method-card"><h3>Representation Interventions</h3><p>We erase or exchange features linked to one quantity, then run the same forecast. A change in the prediction measures its dependence on the edited features.</p></article>
         </div>
         <div class="protocol-readout">
           <div class="readout-definition">
@@ -218,7 +218,7 @@
         <header class="probe-heading probe-heading--aligned">
           <p class="overline"><span class="bars" aria-hidden="true"></span>Frozen-feature readouts</p>
           <h2 id="study-title">What Physical Information Is <em>Accessible?</em></h2>
-          <p class="probe-intro">We first ask what a readout can recover. Read the chart across a model family to compare physical targets, or down a column to compare families. Larger filled circles mean stronger readouts.</p>
+          <p class="probe-intro section-finding"><strong>Models broadly encode object properties and position. Velocity is harder to recover.</strong> Discriminative and latent-predictive models generally outperform pixel generators on object properties. For motion, the strongest model depends on the direction being measured.</p>
         </header>
         <ol class="probe-flow" role="list" aria-label="Linear probing procedure">
           <li>
@@ -269,7 +269,7 @@
           <li class="probe-flow-results"><span>mass?</span><span>speed?</span><span>friction?</span></li>
         </ol>
         <figure class="encoded-matrix" aria-label="Physical signals recovered by linear probing">
-          <table class="enc-table" role="table" aria-label="Probe scores by model family and physical target" aria-describedby="encoded-note">
+          <table class="enc-table" role="table" aria-label="Probe scores by model family and physical target" aria-describedby="encoded-caption">
             <colgroup><col class="enc-family-col"></colgroup>
             <thead role="rowgroup">
               <tr role="row">
@@ -428,24 +428,23 @@
               <span>Perfect</span>
               <span class="enc-untested">Blank = untested</span>
             </span>
-            <p class="enc-note" id="encoded-note">Depth velocity and non-penetration are difficult to read across visual families. Touch and audio were tested on material only.</p>
           </figcaption>
         </figure>
         <div class="finding-note">
           <h3>Object Properties</h3>
-          <p>A photograph can give clues to an object’s mass. For material, we can also measure what a surface feels like under contact or what it sounds like when struck.</p>
+          <p>All 16 visual models expose information about mass. Material discrimination varies from near chance to well above it, and mass readouts transfer more consistently to held-out object categories than material readouts do to unseen materials.</p>
         </div>
         <div class="modalities">
           <figure class="modality"><div class="sample"><img src="assets/vision.webp" alt="Optical photograph of a perforated surface, RCT material 0701420" loading="lazy"><span class="crop-mark"></span></div>
-            <figcaption><h4>Vision</h4><p>All 16 visual models recover object mass. Their errors range from 0.71 to 1.34 bits, against 3.42 bits for a constant prediction.</p></figcaption></figure>
+            <figcaption><h4>Vision</h4><p>DINOv3, SAM3, Qwen3-VL and SigLIP 2 lead the visual property tasks overall. Even the weakest mass readout improves on a constant prediction.</p></figcaption></figure>
           <figure class="modality"><div class="sample"><img src="assets/touch.webp" alt="Colored contact imprint from the same perforated surface, RCT sensor 1, frame 15" loading="lazy"><span class="crop-mark"></span></div>
-            <figcaption><h4>Touch</h4><p>SPARSH-MAE distinguishes materials by touch at 0.949 AUROC. I-JEPA, trained on images, reaches 0.947.</p></figcaption></figure>
+            <figcaption><h4>Touch</h4><p>On background-subtracted contact imprints, image-trained I-JEPA nearly matches tactile-trained SPARSH-MAE with a learned projection (0.947 and 0.949 AUROC).</p></figcaption></figure>
           <figure class="modality"><div class="sample"><img src="assets/sound.webp" alt="Spectrogram of the first 300 milliseconds of a RealImpact recording, with time increasing to the right and frequency upward" loading="lazy"><span class="crop-mark"></span></div>
-            <figcaption><h4>Sound</h4><p>Material discrimination from impact sounds reaches 0.736 mean AUROC. A random-weight audio encoder reaches 0.704.</p></figcaption></figure>
+            <figcaption><h4>Sound</h4><p>Pretraining gives a modest gain for recognizing materials from impact sounds. The best audio encoder reaches 0.736 mean AUROC, compared with 0.704 for BEATs with random weights.</p></figcaption></figure>
         </div>
         <div class="finding-pair">
-          <article class="finding-note"><h3>Physical States and Dynamical Factors</h3><p>All ten models tested locate the object accurately. Tracking how fast it moves toward the camera is harder. The temporal models reach R² of 0.30–0.42 for depth velocity, while VGGT reaches 0.726.</p></article>
-          <article class="finding-note"><h3>Accessibility Across Layers and Scales</h3><p>The best layer depends on both the model and the quantity. Mass is easier to read from deeper layers in DINOv3 and V-JEPA 2.1, but from intermediate layers in LTX-2.5 and Cosmos.</p></article>
+          <article class="finding-note"><h3>Physical States and Dynamical Factors</h3><p>All ten models localize the object accurately. Temporal models expose sideways and rotational motion and consistently recover physical parameters. VGGT leads on velocity and acceleration along the depth axis. No model recovers all three kinds of motion well.</p></article>
+          <article class="finding-note"><h3>Accessibility Across Layers and Scales</h3><p>Linear and MLP probes largely agree on model rankings. Greater depth and size help only on some targets. Mass peaks at intermediate layers in LTX-2.5 and Cosmos. Larger DINOv3 models continue to improve on mass even after material and mean-speed scores plateau.</p></article>
         </div>
       </div></section>
 
@@ -453,7 +452,7 @@
         <header class="probe-heading probe-heading--aligned">
           <p class="overline"><span class="bars" aria-hidden="true"></span>Observation controls</p>
           <h2 id="obs-title">Which Cues Do Physical <em>Readouts Use?</em></h2>
-          <p class="probe-intro">If a model can estimate mass, would the same readout work from a different camera angle? Each clip pairs the original input with a control. The fixed score tests transfer. The refitted score tells us how much information a new readout can recover.</p>
+          <p class="probe-intro section-finding"><strong>A change in observation can break a trained readout while leaving the physical information recoverable.</strong> The final frame alone carries cues to mass, mean speed and friction. Changes in viewpoint, shape or frame order reveal which cues the original probe relied on.</p>
         </header>
         <section class="control-deck" id="observation-controls" aria-label="Genesis observation controls">
           <div class="control-deck__nav" hidden>
@@ -472,7 +471,7 @@
               </div>
               <figcaption>
                 <h3>Rotate the camera <span class="display-angle">35°</span></h3>
-                <p>The same box trajectory is rendered from a second camera, rotated horizontally by 35°. The object states, physical labels and data splits stay fixed. Refitting the readout recovers the mass signal.</p>
+                <p><strong>Turning the camera weakens the original mass probe. Refitting restores its score.</strong> V-JEPA 2.1 sees the same trajectory from both views. The horizontal shift also lowers every model’s mean-speed score with its original probe.</p>
                 <div class="shape-scores">
                   <p class="shape-scores-title">V-JEPA 2.1 · mass · test R²</p>
                   <dl>
@@ -493,7 +492,7 @@
               </div>
               <figcaption>
                 <h3>Raise the camera <span class="display-angle">15°</span></h3>
-                <p>The camera looks down more steeply on the same motion. The original mass probe loses accuracy from this higher viewpoint, while a probe fitted to elevated views reaches the original score again.</p>
+                <p><strong>Raising the camera disrupts V-JEPA 2.1’s mass readout more than turning it horizontally.</strong> Fitting a probe to the elevated views brings its score back to the original level.</p>
                 <div class="shape-scores">
                   <p class="shape-scores-title">V-JEPA 2.1 · mass · test R²</p>
                   <dl>
@@ -514,7 +513,7 @@
               </div>
               <figcaption>
                 <h3>New trials, same shape</h3>
-                <p>A second set of box trials measures how much the readout shifts even when the shape stays the same. The two trials shown share a camera, a mass of 0.50 kg and an applied force of 3.0 N. Their starting conditions were sampled independently.</p>
+                <p><strong>Even on fresh box trials, the original mass probe loses accuracy.</strong> The two clips shown share a camera, mass and applied force, with independently sampled starting conditions. This control helps distinguish a change of shape from a change of trial.</p>
                 <div class="shape-scores">
                   <p class="shape-scores-title">V-JEPA 2.1 · mass · test R²</p>
                   <dl>
@@ -535,7 +534,7 @@
               </div>
               <figcaption>
                 <h3>From boxes to cylinders</h3>
-                <p>The cylinder matches the box in height, base area, volume and mass. Both objects shown receive the same 3.0 N force. The box-trained mass probe gives a negative test R² on cylinders, and refitting restores its accuracy.</p>
+                <p><strong>Mass remains readable after V-JEPA 2.1’s box-trained probe fails on cylinders.</strong> A probe fitted to cylinder features recovers mass about as well as the original probe did on boxes. LTX-2.5’s mass probe transfers much more consistently across the same shape change.</p>
                 <div class="shape-scores">
                   <p class="shape-scores-title">V-JEPA 2.1 · mass · test R²</p>
                   <dl>
@@ -556,7 +555,7 @@
               </div>
               <figcaption>
                 <h3>Repeat the first frame</h3>
-                <p>The first observed frame fills all 32 input positions. The refitted probe recovers little about mean speed. In the separate six-material trials, V-JEPA 2.1 still reaches 1.000 balanced accuracy for material after refitting.</p>
+                <p><strong>The first frame carries material cues but yields poor estimates of mass, mean speed and friction.</strong> Repeating it removes the visible history of motion. Even refitting the probe cannot recover those three quantities reliably.</p>
                 <div class="shape-scores">
                   <p class="shape-scores-title">V-JEPA 2.1 · mean speed · test R²</p>
                   <dl>
@@ -577,7 +576,7 @@
               </div>
               <figcaption>
                 <h3>Repeat the last frame</h3>
-                <p>The last frame of the observation window fills every input position. Even without motion between frames, the final position carries a strong speed cue in these trajectories. Refitted mean-speed R² spans 0.951–0.995 across the six models.</p>
+                <p><strong>The final frame alone carries cues to what happened during motion.</strong> Across all six models, refitted probes recover mean speed (R² 0.951–0.995) and mass (0.722–0.898) from the repeated final frame. A strong speed score can therefore come from the visible outcome.</p>
                 <div class="shape-scores">
                   <p class="shape-scores-title">V-JEPA 2.1 · mean speed · test R²</p>
                   <dl>
@@ -598,7 +597,7 @@
               </div>
               <figcaption>
                 <h3>Shuffle two-frame blocks</h3>
-                <p>The 32 frames are split into 16 adjacent pairs. The pairs move to new positions, while the two frames inside each pair keep their order. V-JEPA 2.1’s original speed readout loses accuracy on the shuffled sequence.</p>
+                <p><strong>Shuffling frame pairs weakens V-JEPA 2.1’s speed readout, and refitting nearly restores it.</strong> DINOv3 and VGGT remain stable under reordering, consistent with their use of frame averaging.</p>
                 <div class="shape-scores">
                   <p class="shape-scores-title">V-JEPA 2.1 · mean speed · test R²</p>
                   <dl>
@@ -619,7 +618,7 @@
               </div>
               <figcaption>
                 <h3>Reverse the sequence</h3>
-                <p>The same 32 frames play in reverse, with the labels from the original forward trajectory. A refitted probe recovers mean speed just as accurately from the reversed input.</p>
+                <p><strong>Reversing a clip preserves its mean speed, yet the original speed readout can fail.</strong> V-JEPA 2.1’s fixed probe loses accuracy, and Cosmos’s fixed R² drops by 0.655. Refitting recovers the signal, showing how strongly those readouts depend on playback order.</p>
                 <div class="shape-scores">
                   <p class="shape-scores-title">V-JEPA 2.1 · mean speed · test R²</p>
                   <dl>
@@ -639,7 +638,7 @@
         <figure class="transfer-results" aria-labelledby="transfer-figure-title">
           <figcaption>
             <h3 id="transfer-figure-title">Readout scores across four observation changes</h3>
-            <p>Each fine line tracks one model under one change. The bold lines and table give the mean across the four changes.</p>
+            <p>Averaged across the four changes, all six models score lower with a fixed probe. Refitting brings each model close to its original score. The largest fixed-probe losses occur for VGGT and DINOv3.</p>
           </figcaption>
           <div class="transfer-display">
             <div class="transfer-chart">
@@ -726,7 +725,6 @@
               </tbody>
             </table>
           </div>
-          <p class="transfer-method">The four changes are a 35° camera yaw, a 15° camera elevation, new box trials and cylinder trials. Each score averages test R² for mass, mean speed and friction, with each R² clipped to [0, 1].</p>
         </figure>
       </div></section>
 
@@ -734,10 +732,10 @@
         <header class="event-heading">
           <p class="overline"><span class="bars" aria-hidden="true"></span>Event judgments</p>
           <h2 id="events-title">Can Models Judge and <em>Predict Events?</em></h2>
-          <p>Recognizing that two objects collided and judging whether a solid object passed through another are different tasks. We test six models on real collision videos and separately on physically possible and impossible scenes.</p>
+          <p class="section-finding"><strong>All six models recognize collisions. Even the best readout is close to chance at detecting when solid objects pass through one another.</strong> LTX and Cosmos lead overall on consistency judgments. For future motion, different models lead on displacement and rotation.</p>
         </header>
         <figure class="event-figure"><figcaption><span id="event-chart-title">Physical Consistency and Interaction</span><span class="chart-unit">AUROC · higher is better</span></figcaption>
-          <table class="range-table" aria-labelledby="event-chart-title" aria-describedby="event-chart-note"><thead><tr><th scope="col">Model</th><th scope="col" class="metric-np"><span class="point hollow"></span><span>Non-<wbr>penetration</span></th><th scope="col" aria-hidden="true"><div class="x-axis"><span>.50</span><span>.60</span><span>.70</span><span>.80</span><span>.90</span><span>1.0</span></div></th><th scope="col" class="metric-coll"><span class="point"></span><span>Collision</span></th></tr></thead><tbody>
+          <table class="range-table" aria-labelledby="event-chart-title"><thead><tr><th scope="col">Model</th><th scope="col" class="metric-np"><span class="point hollow"></span><span>Non-<wbr>penetration</span></th><th scope="col" aria-hidden="true"><div class="x-axis"><span>.50</span><span>.60</span><span>.70</span><span>.80</span><span>.90</span><span>1.0</span></div></th><th scope="col" class="metric-coll"><span class="point"></span><span>Collision</span></th></tr></thead><tbody>
             <tr><th scope="row">DINOv3 <small>ViT-L/16</small></th><td class="np-val">0.518</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:3.6%;--hi:71.2%"><i></i></div></td><td class="coll-val">0.856</td></tr>
             <tr><th scope="row">V-JEPA 2.1 <small>ViT-L</small></th><td class="np-val">0.547</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:9.4%;--hi:93.8%"><i></i></div></td><td class="coll-val">0.969</td></tr>
             <tr><th scope="row">Qwen3-VL <small>8B · visual</small></th><td class="np-val">0.540</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:8.0%;--hi:63.0%"><i></i></div></td><td class="coll-val">0.815</td></tr>
@@ -745,11 +743,10 @@
             <tr><th scope="row">LTX-2.5</th><td class="np-val">0.552</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:10.4%;--hi:80.8%"><i></i></div></td><td class="coll-val">0.904</td></tr>
             <tr><th scope="row">Cosmos-Predict2.5 <small>2B</small></th><td class="np-val">0.585</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:17.0%;--hi:77.2%"><i></i></div></td><td class="coll-val">0.886</td></tr>
           </tbody></table>
-          <p class="fig-note" id="event-chart-note">On Something-Something v2, all six collision readouts score at least 0.815 AUROC. On IntPhys2, even the strongest non-penetration readout reaches only 0.585, close to chance (0.50).</p>
         </figure>
         <article class="prediction-note">
           <h3>Future Prediction</h3>
-          <p>Given only the observed part of a Genesis trajectory, the best readout depends on what happens next. LTX-2.5 leads on displacement, V-JEPA 2.1 on angular velocity, and Cosmos on accumulated rotation. We use these future targets to ask which features the predictions depend on.</p>
+          <p>On Genesis, LTX-2.5 leads on future displacement, V-JEPA 2.1 on signed angular velocity, and Cosmos on signed accumulated rotation. DINOv3, Qwen3-VL and VGGT each predict displacement more accurately than either rotational quantity.</p>
         </article>
       </div></section>
 
@@ -757,12 +754,11 @@
         <header class="probe-heading">
           <div><p class="overline"><span class="bars" aria-hidden="true"></span>Feature interventions</p>
             <h2 id="inter-title">Is Decodable <em>Information Used?</em></h2></div>
-          <p class="probe-intro">Take a readout trained to predict future displacement. We erase features associated with one physical variable and ask it to predict again. The bigger the drop in accuracy, the more that forecast depended on the edited features.</p>
+          <p class="probe-intro section-finding"><strong>A variable can be easy to read out and have little influence on a forecast.</strong> Across the mass, friction and rotation scenes, future-motion readouts depended much more on features linked to governing parameters and speed than on features linked to position or orientation.</p>
         </header>
         <figure class="use-scatter" aria-labelledby="use-scatter-caption">
           <figcaption id="use-scatter-caption">
             <h3>Dependence of Fixed Future Readouts</h3>
-            <span>6 models · 48 edits</span>
           </figcaption>
           <div class="use-scatter__body">
             <div class="use-scatter__chart">
@@ -836,6 +832,16 @@
               <p class="use-scatter__x-label">Readability before deletion <span>· probe R²</span></p>
             </div>
             <div class="use-scatter__sidebar">
+              <dl class="use-scatter__key">
+                <div>
+                  <dt><i aria-hidden="true"></i>Scene parameters and motion</dt>
+                  <dd><strong>Erasing these cues weakens the forecast.</strong><span>These edits target mass, friction, angular damping or speed. Swapping the corresponding features between trajectories also shifts predictions toward the donor’s outcome.</span></dd>
+                </div>
+                <div>
+                  <dt><i aria-hidden="true"></i>Position and orientation</dt>
+                  <dd><strong>Forecasts barely change when these cues are erased.</strong><span>Even when a probe reads position or orientation accurately, swapping these features produces little shift toward the donor’s displacement or rotation.</span></dd>
+                </div>
+              </dl>
               <aside class="loss-definition" aria-label="How prediction loss is measured">
                 <h4>Reading the vertical axis</h4>
                 <div class="equation-line">
@@ -850,25 +856,15 @@
                 </div>
                 <p>The numerator measures the drop in the fixed readout’s R² after erasing variable <i>q</i>. A value of 1 matches the loss from erasing the future target <i>z</i> itself.</p>
               </aside>
-              <dl class="use-scatter__key">
-              <div>
-                <dt><i aria-hidden="true"></i>Scene parameters and motion</dt>
-                <dd><strong>0.65 to 1.03</strong><span>Mass, friction, angular damping, terminal speed and angular velocity.</span></dd>
-              </div>
-              <div>
-                <dt><i aria-hidden="true"></i>Position and orientation</dt>
-                <dd><strong>−0.05 to 0.02</strong><span>Erasing these controls leaves the forecast nearly unchanged.</span></dd>
-              </div>
-              </dl>
             </div>
           </div>
-          <p class="use-scatter__note">Each point represents one model, scene and erased variable. We normalize within each split, then average over three splits. Results include fixed readouts with baseline future R² ≥ 0.30.</p>
+          <p class="use-scatter__note">The 48 points show edits across six models. Each point represents one model, scene and erased variable. We normalize within each split, then average over three splits. Results include fixed readouts with baseline future R² ≥ 0.30.</p>
         </figure>
         <section class="native" id="native-predictions" aria-labelledby="native-title">
           <div>
             <h3 id="native-title">Interventions on Native Predictions</h3>
-            <p>How far will a box slide in the next second? We estimate its displacement from the features forecast by the frozen V-JEPA 2.1 predictor. With unedited features, the displacement readout reaches a test R² of 0.970.</p>
-            <p>We edit one cue before it reaches the predictor. Erasing it tests how much the forecast depends on that cue. In a separate test, we swap the cue between two clips and check whether the forecast shifts in the direction of the donor clip’s displacement.</p>
+            <p><strong>V-JEPA 2.1’s own predictor also shows this selective dependence.</strong> On the original sliding-box trials, the displacement readout has a test R² of 0.970 with unedited features. Erasing friction- or speed-linked cues before they enter the frozen predictor weakens its forecast. Erasing position cues leaves the score nearly unchanged.</p>
+            <p>When we swap friction-linked cues between clips, the predicted displacement shifts in the donor’s direction in every tested pair. Swapping position cues produces little donor-directed change.</p>
           </div>
           <div class="native-result">
             <table>
@@ -888,7 +884,9 @@
       <section data-ark-depth="moderate" class="conclusion section" id="conclusion" aria-labelledby="conclusion-title"><div class="shell">
         <div class="story-close">
           <h2 id="conclusion-title">Conclusion</h2>
-          <p>A single frame taken at the end of a box’s motion can already give a readout enough evidence to estimate its mean speed. Changing the box to a cylinder can defeat a mass readout even though a new one recovers mass. And in a displacement forecast, erasing friction-linked features matters far more than erasing position. Together these experiments show where a physical signal is available, which observations support it, and when a particular prediction depends on it.</p>
+          <p>Probes recover object properties and position across a wide range of foundation models. The models differ in how well their features reveal motion, support judgments about physical events and predict future states. Changing the observation often breaks a fixed readout even when a new readout can recover the same quantity.</p>
+          <p>In the intervention experiments, dependence on a variable followed its causal role in the tested motion. Its decoding score alone was a poor guide to how much the forecast relied on it. This pattern held for both fixed readouts and a frozen native predictor.</p>
+          <p class="conclusion-claim"><strong>Probing accuracy alone overstates physical understanding. Encoding, transfer and use must be assessed separately.</strong></p>
         </div>
       </div></section>
     </main>

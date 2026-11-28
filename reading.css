@@ -265,6 +265,10 @@
   font: 400 clamp(1rem, 1.25vw, 1.16rem)/1.6 var(--body);
   text-wrap: pretty;
 }
+.section-finding strong, .probe-intro strong, .intro-findings strong, .native strong {
+  color: var(--ink);
+  font-weight: 650;
+}
 #study .modalities, #observations .matched, #interventions .native {
   margin-top: clamp(2rem, 4vw, 3.8rem);
 }
@@ -538,7 +542,7 @@
   font: 450 clamp(1.45rem, 2.25vw, 2rem)/1.15 var(--serif, Georgia, serif);
   letter-spacing: -.025em;
 }
-.use-scatter figcaption > span, .use-scatter .use-scatter__note {
+.use-scatter .use-scatter__note {
   color: var(--quiet, #435760);
   font: 400 .85rem/1.55 var(--body, sans-serif);
 }
@@ -636,9 +640,8 @@
 .use-scatter__key strong {
   display: block;
   color: var(--plot-teal);
-  font: 450 clamp(1.55rem, 2.6vw, 2.35rem)/1.12 var(--display-number);
-  font-variant-numeric: lining-nums tabular-nums;
-  letter-spacing: -.03em;
+  font: 600 clamp(1rem, 1.45vw, 1.22rem)/1.35 var(--body);
+  text-wrap: pretty;
 }
 .use-scatter__key div + div strong { color: var(--plot-ink); }
 .use-scatter__key dd span {
@@ -887,7 +890,8 @@
   color: var(--quiet);
   font: 400 .875rem/1.55 var(--body);
 }
-.use-scatter__sidebar .use-scatter__key { border-top: 1px solid var(--rule); padding-top: 1.1rem; gap: 1.05rem }
+.use-scatter__sidebar .use-scatter__key { gap: 1.05rem }
+.use-scatter__sidebar .loss-definition { border-top: 1px solid var(--rule); padding-top: 1rem }
 #interventions .use-scatter__plot { height: clamp(14rem, 27cqw, 22rem) }
 #interventions .native {
   border-inline: 0;
@@ -1094,6 +1098,13 @@
 .story-close { max-width: 58rem; margin-inline: auto }
 .story-close h2 { margin: .55rem 0 .95rem }
 .story-close p + p { margin-top: .8rem }
+.story-close .conclusion-claim strong {
+  display: block;
+  padding-top: .8rem;
+  border-top: 1px solid var(--rule);
+  color: var(--read-accent);
+  font-weight: 650;
+}
 
 @media screen and (max-width: 800px), screen and (hover: none), screen and (pointer: coarse) {
   .chapter-nav .chapter-inner {
