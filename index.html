@@ -19,7 +19,7 @@
   <meta property="og:title" content="What Do Foundation Models Know About Physics?">
   <meta property="og:description" content="From frozen representations to physical predictions. Research by Meng Wang, Mingyang Bao, Jason Li, Shengqiong Wu, and Hao Fei.">
   <meta property="og:type" content="website">
-  <link rel="icon" type="image/svg+xml" href="assets/mark.svg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'/%3E">
   <script>
     (() => {
       if (location.hash) return;
@@ -31,10 +31,10 @@
       classes.add('title-sequence', 'intro-paused');
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=intro-entry-2">
-  <link rel="stylesheet" href="exhibit.css">
+  <link rel="stylesheet" href="styles.css?v=trajectory-video">
+  <link rel="stylesheet" href="exhibit.css?v=footer-row">
   <link rel="stylesheet" href="opening.css?v=intro-entry-2">
-  <link rel="stylesheet" href="reading.css">
+  <link rel="stylesheet" href="reading.css?v=solid-klein-markers">
   <link rel="stylesheet" href="painting.css">
   <link rel="stylesheet" href="atlas.css">
 </head>
@@ -98,10 +98,19 @@
     <div class="opening-flight"><div class="opening-title"></div></div>
   </div>
   <div class="site" id="top">
-    <a class="skip" href="#study">Skip to the study</a>
+    <a class="skip" href="#introduction">Skip to the introduction</a>
     <nav class="chapter-nav" aria-label="Paper contents">
       <div class="chapter-inner">
-        <ol><li><a href="#overview"><i aria-hidden="true"></i><span>Cover</span></a></li><li><a href="#study"><i aria-hidden="true"></i><span>Study</span></a></li><li><a href="#observations"><i aria-hidden="true"></i><span>Controls</span></a></li><li><a href="#events"><i aria-hidden="true"></i><span>Events</span></a></li><li><a href="#interventions"><i aria-hidden="true"></i><span>Interventions</span></a></li></ol>
+        <ol>
+          <li><a href="#overview"><i aria-hidden="true"></i><span>Cover</span></a></li>
+          <li><a href="#introduction"><i aria-hidden="true"></i><span>Introduction</span></a></li>
+          <li><a href="#settings"><i aria-hidden="true"></i><span>Settings</span></a></li>
+          <li><a href="#study"><i aria-hidden="true"></i><span>Readouts</span></a></li>
+          <li><a href="#observations"><i aria-hidden="true"></i><span>Cues</span></a></li>
+          <li><a href="#events"><i aria-hidden="true"></i><span>Events</span></a></li>
+          <li><a href="#interventions"><i aria-hidden="true"></i><span>Interventions</span></a></li>
+          <li><a href="#conclusion"><i aria-hidden="true"></i><span>Conclusion</span></a></li>
+        </ol>
       </div>
     </nav>
     <main>
@@ -160,51 +169,575 @@
         </div>
       </section>
 
+      <section data-ark-depth="moderate" class="introduction section" id="introduction" aria-labelledby="intro-title"><div class="shell">
+        <div class="story-opening">
+          <div class="story-copy">
+            <h2 id="intro-title">Introduction</h2>
+            <p>Perception, video generation, robotic interaction and world modeling require models to recover physical properties, characterize motion, infer dynamical factors and anticipate interactions. Foundation models learn from images, video, audio and touch under different pretraining objectives. These differences may shape which physical information their representations retain.</p>
+            <blockquote>What physical information is encoded across modalities and pretraining objectives, and how does it support physical understanding and prediction?</blockquote>
+            <p>Physical benchmarks reveal errors in question answering and video generation. The scores alone leave open which physical quantities a model encodes. Prior studies of representations often focus on particular model families, modalities or variables. Even when a probe accurately recovers a quantity, the cues that support the readout and the role of those features in prediction remain open questions.</p>
+            <p>We study physical-variable recovery alongside event judgment and future prediction across modalities and pretraining objectives. We train readouts on frozen representations, then compare fixed and refitted readouts as temporal cues, viewpoints and shapes change. Finally, we delete or exchange features associated with a variable and measure the effect on a fixed prediction readout. In selected experiments, we also test these edits in a frozen V-JEPA predictor.</p>
+          </div>
+          <aside class="intro-findings" aria-labelledby="intro-findings-title">
+            <h3 id="intro-findings-title">Main findings</h3>
+            <ol>
+              <li><span>F1</span><p>Object properties are broadly recoverable. Discriminative and latent-predictive models outperform pixel generators on these tasks. Greater depth and scale give no consistent advantage.</p></li>
+              <li><span>F2</span><p>Temporal models better expose motion and dynamical factors, while geometry models lead on motion along the depth axis. Position and physical parameters are easier to recover than velocity.</p></li>
+              <li><span>F3</span><p>Final-frame cues can reveal physical quantities. Changes in frame order, viewpoint or shape can disrupt a fixed readout even when a newly fitted readout recovers the information.</p></li>
+              <li><span>F4</span><p>Predictive and generative video models better support event judgment and future prediction. Even models that recognize collisions struggle to judge whether solid objects pass through one another.</p></li>
+              <li><span>F5</span><p>Prediction dependence follows a variable’s causal role in the tested settings. Erasing position- or orientation-linked features barely changes future readouts. Editing features linked to mass, friction, speed or rotation changes predictions, with effects also observed in a frozen V-JEPA predictor.</p></li>
+            </ol>
+          </aside>
+        </div>
+      </div></section>
+
+      <section data-ark-depth="moderate" class="settings section" id="settings" aria-labelledby="settings-title"><div class="shell">
+        <header class="probe-heading">
+          <div><p class="overline"><span class="bars" aria-hidden="true"></span>Experimental protocol</p>
+            <h2 id="settings-title">Evaluation Settings</h2></div>
+          <p class="probe-intro">We study more than 30 foundation models using images, video, touch and sound. For the moving-box experiments, the simulator gives us ground truth for quantities such as mass, speed and friction. We can change what a model sees while keeping the underlying physics fixed.</p>
+        </header>
+        <div class="method-cards">
+          <article class="method-card"><h3>Frozen Representation Probing</h3><p>Keep the foundation model fixed and train a small readout on its features. Can the readout estimate the mass of a box on a held-out trial?</p></article>
+          <article class="method-card"><h3>Input Controls</h3><p>Show the same motion from another angle or give the model only the final frame. Test the original readout, then fit a new one to see what information survives the change.</p></article>
+          <article class="method-card"><h3>Representation Interventions</h3><p>Remove or exchange features associated with a quantity such as friction. Hold the predictor fixed and measure how far its forecast moves.</p></article>
+        </div>
+        <div class="protocol-readout">
+          <div class="readout-definition">
+            <div class="equation-line">
+              <math aria-label="Predicted y equals the readout f theta applied to frozen layer E ell of observation x">
+                <mrow><mover accent="true"><mrow><mi>y</mi><mspace width="0" height="0.58em"/></mrow><mo>^</mo></mover><mo>=</mo><msub><mi>f</mi><mi>θ</mi></msub><mo stretchy="false">(</mo><msub><mi>E</mi><mi>ℓ</mi></msub><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow>
+              </math>
+            </div>
+            <p>For a mass estimate, <i>x</i> is the video and <i>E</i><sub>ℓ</sub>(<i>x</i>) is the feature vector from layer ℓ. Training adjusts only the readout <i>f</i><sub>θ</sub>. Its output ŷ is the estimated mass.</p>
+          </div>
+        </div>
+      </div></section>
+
       <section data-ark-depth="moderate" class="study section" id="study" aria-labelledby="study-title"><div class="shell">
-        <p class="overline"><span class="bars" aria-hidden="true"></span>Study design</p>
-        <div class="study-heading"><h2 id="study-title">Reading physics from<br><em>frozen features.</em></h2>
-          <p class="body-intro">A frozen encoder turns images, touch, or sound into features. A small readout measures which physical properties those features reveal. Changing the observations and editing the features test how far that evidence carries.</p>
+        <header class="probe-heading probe-heading--aligned">
+          <p class="overline"><span class="bars" aria-hidden="true"></span>Frozen-feature readouts</p>
+          <h2 id="study-title">What Physical Information Is <em>Accessible?</em></h2>
+          <p class="probe-intro">We first ask what a readout can recover. Read the chart across a model family to compare physical targets, or down a column to compare families. Larger filled circles mean stronger readouts.</p>
+        </header>
+        <ol class="probe-flow" role="list" aria-label="Linear probing procedure">
+          <li>
+            <svg viewBox="0 0 62 46" aria-hidden="true" focusable="false">
+              <defs><radialGradient id="probe-ball" cx=".32" cy=".25" r=".78"><stop stop-color="#e1f3df"/><stop offset=".48" stop-color="#77b6a0"/><stop offset="1" stop-color="#34665e"/></radialGradient></defs>
+              <g fill="none" stroke="#5f9387" stroke-linecap="round">
+                <path d="M8 15h17M2 21h20M11 27h11M16 32h9" opacity=".7"/>
+                <circle cx="39" cy="23" r="14.5" fill="url(#probe-ball)" stroke="#406a60"/>
+                <g stroke="#46766a" opacity=".7" stroke-width=".85">
+                  <ellipse cx="39" cy="23" rx="7.3" ry="14" transform="rotate(32 39 23)"/>
+                  <path d="M27 16c3 7 12 13 23 14m-23-6c6 7 13 10 19 10m-13-23c2 5 10 11 20 13"/>
+                </g>
+              </g>
+            </svg>
+            <span>observation</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 60 46" aria-hidden="true" focusable="false">
+              <g stroke-linecap="round" stroke-linejoin="round">
+                <path d="m29 2 17.7 5.9 3.3 3.3-.7 20.7-2.6 3.6L29 43.8l-17.8-7.7-3-3.8-.8-19.8 2.8-3.8z" fill="#d8f1f3" stroke="#577f8c" stroke-width="1.15"/>
+                <path d="m10.2 8.7 19-5.7 17.5 4.9-17.6 7.8z" fill="#f4fdff"/>
+                <path d="m30.4 4.5 8.7 2.6-6.4 3.6-7.1-1.9z" fill="#dcf2f5"/>
+                <g stroke="#47566b" stroke-width="1.05">
+                  <path d="m14.6 28.1 14-5.6 13.8 5.2v1.6l-13.9 6.2-13.9-6z" fill="#9eafc3"/>
+                  <path d="m14.6 22.6 14-5.7 13.8 5.2v1.6l-13.9 6.2-13.9-6z" fill="#b9c8d7"/>
+                  <path d="m14.6 17 14-5.7 13.8 5.2v1.6l-13.9 6.2-13.9-6z" fill="#dce5ed"/>
+                  <path d="m18.9 17.1 9.8-4 7.7 2.8" fill="none" stroke-width=".65"/>
+                </g>
+                <path d="m8.2 12.2 20.5 7.3.3 23.1-17.8-7.7-2.2-2.6z" fill="#c1eaf0" fill-opacity=".17"/>
+                <path d="m28.7 19.5 20.4-8.3-.7 20.7-2.2 2.6L29 42.6z" fill="#8acbd6" fill-opacity=".26"/>
+                <path d="m10.2 9.3 18.5 7.3 17.7-7.8M28.7 16.6v22.8" stroke="#f8ffff" stroke-width="1.4" fill="none" opacity=".83"/>
+                <path d="m10.8 14 .5 11.3m1.1-13.1 6.6 2.6M46.9 23.4l-.3 7.8-2 2.3" stroke="#fff" stroke-width="1.45" fill="none"/>
+                <path d="m12.8 35.1 5.2 2.3-4.4-6.1zM40.3 36.1l5.8-4.9.4 2z" fill="#f5ffff" opacity=".82"/>
+              </g>
+            </svg>
+            <span>frozen model</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 48 46" aria-hidden="true" focusable="false">
+              <path d="m28 28 4.8 4.6" stroke="#5c5346" stroke-width="3.2"/>
+              <path d="m31.8 31.2 2-1.5 9.2 9.5a2 2 0 0 1-3.1 2.7l-8.4-9.2z" fill="#c6a578" stroke="#695c4e" stroke-width="1.1"/>
+              <circle cx="20.8" cy="19.1" r="12.8" fill="#e2c297" stroke="#62594c" stroke-width="1.1"/>
+              <circle cx="20.8" cy="19.1" r="10.1" fill="#deebed" stroke="#657a80"/>
+              <path d="M13.5 18.8a7.6 7.6 0 0 1 5.8-7.1" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1.8"/>
+            </svg>
+            <span>linear probe</span>
+          </li>
+          <li class="probe-flow-results"><span>mass?</span><span>speed?</span><span>friction?</span></li>
+        </ol>
+        <figure class="encoded-matrix" aria-label="Physical signals recovered by linear probing">
+          <table class="enc-table" role="table" aria-label="Probe scores by model family and physical target" aria-describedby="encoded-note">
+            <colgroup><col class="enc-family-col"></colgroup>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th scope="col" class="enc-origin" aria-label="Model family"></th>
+                <th scope="col" role="columnheader" id="enc-mass" class="enc-target" style="--target:1"><span>Mass</span></th>
+                <th scope="col" role="columnheader" id="enc-material" class="enc-target" style="--target:2"><span>Material</span></th>
+                <th scope="col" role="columnheader" id="enc-position" class="enc-target" style="--target:3"><span>Position</span></th>
+                <th scope="col" role="columnheader" id="enc-lateral-velocity" class="enc-target" style="--target:4"><span>Lateral velocity</span></th>
+                <th scope="col" role="columnheader" id="enc-depth-velocity" class="enc-target enc-hard" style="--target:5"><span>Depth velocity</span></th>
+                <th scope="col" role="columnheader" id="enc-rotation-speed" class="enc-target" style="--target:6"><span>Rotation speed</span></th>
+                <th scope="col" role="columnheader" id="enc-friction" class="enc-target" style="--target:7"><span>Friction</span></th>
+                <th scope="col" role="columnheader" id="enc-force" class="enc-target" style="--target:8"><span>Force</span></th>
+                <th scope="col" role="columnheader" id="enc-permanence" class="enc-target" style="--target:9"><span>Permanence</span></th>
+                <th scope="col" role="columnheader" id="enc-non-penetration" class="enc-target enc-hard" style="--target:10"><span>Non-<wbr>penetration</span></th>
+                <th scope="col" role="columnheader" id="enc-collision" class="enc-target" style="--target:11"><span>Collision</span></th>
+                <th scope="col" role="columnheader" id="enc-future-motion" class="enc-target" style="--target:12"><span>Future motion</span></th>
+                <th scope="col" role="columnheader" id="enc-future-rotation" class="enc-target" style="--target:13"><span>Future rotation</span></th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              <tr role="row" style="--family:#a85f32;--mcol:2">
+                <th class="enc-family" scope="row" role="rowheader" id="enc-family-0"><span>Image</span></th>
+                <td headers="enc-family-0 enc-mass" role="cell" style="--target:1"><span class="enc-disk" role="img" aria-label="Filled area about 75% of the full disk" style="--fill:86.553%"></span></td>
+                <td headers="enc-family-0 enc-material" role="cell" style="--target:2"><span class="enc-disk" role="img" aria-label="Filled area about 51% of the full disk" style="--fill:71.647%"></span></td>
+                <td headers="enc-family-0 enc-position" role="cell" style="--target:3"><span class="enc-disk" role="img" aria-label="Filled area about 97% of the full disk" style="--fill:98.640%"></span></td>
+                <td headers="enc-family-0 enc-lateral-velocity" role="cell" style="--target:4"><span class="enc-disk" role="img" aria-label="Filled area about 9% of the full disk" style="--fill:30.332%"></span></td>
+                <td headers="enc-family-0 enc-depth-velocity" role="cell" style="--target:5"><span class="enc-disk" role="img" aria-label="Filled area about 31% of the full disk" style="--fill:55.588%"></span></td>
+                <td headers="enc-family-0 enc-rotation-speed" role="cell" style="--target:6"><span class="enc-disk" role="img" aria-label="Filled area about 10% of the full disk" style="--fill:31.623%"></span></td>
+                <td headers="enc-family-0 enc-friction" role="cell" style="--target:7"><span class="enc-disk" role="img" aria-label="Filled area about 92% of the full disk" style="--fill:96.073%"></span></td>
+                <td headers="enc-family-0 enc-force" role="cell" style="--target:8"><span class="enc-disk" role="img" aria-label="Filled area about 69% of the full disk" style="--fill:82.885%"></span></td>
+                <td headers="enc-family-0 enc-permanence" role="cell" style="--target:9"><span class="enc-disk" role="img" aria-label="At the chance baseline" style="--fill:0.000%"></span></td>
+                <td headers="enc-family-0 enc-non-penetration" role="cell" style="--target:10"><span class="enc-disk" role="img" aria-label="Filled area about 4% of the full disk" style="--fill:18.974%"></span></td>
+                <td headers="enc-family-0 enc-collision" role="cell" style="--target:11"><span class="enc-disk" role="img" aria-label="Filled area about 71% of the full disk" style="--fill:84.380%"></span></td>
+                <td headers="enc-family-0 enc-future-motion" role="cell" style="--target:12"><span class="enc-disk" role="img" aria-label="Filled area about 53% of the full disk" style="--fill:73.144%"></span></td>
+                <td headers="enc-family-0 enc-future-rotation" role="cell" style="--target:13"><span class="enc-disk" role="img" aria-label="Filled area about 6% of the full disk" style="--fill:24.084%"></span></td>
+              </tr>
+              <tr role="row" style="--family:#247f76;--mcol:3">
+                <th class="enc-family" scope="row" role="rowheader" id="enc-family-1"><span>Video</span></th>
+                <td headers="enc-family-1 enc-mass" role="cell" style="--target:1"><span class="enc-disk" role="img" aria-label="Filled area about 74% of the full disk" style="--fill:86.095%"></span></td>
+                <td headers="enc-family-1 enc-material" role="cell" style="--target:2"><span class="enc-disk" role="img" aria-label="Filled area about 51% of the full disk" style="--fill:71.320%"></span></td>
+                <td headers="enc-family-1 enc-position" role="cell" style="--target:3"><span class="enc-disk" role="img" aria-label="Filled area about 99% of the full disk" style="--fill:99.298%"></span></td>
+                <td headers="enc-family-1 enc-lateral-velocity" role="cell" style="--target:4"><span class="enc-disk" role="img" aria-label="Filled area about 82% of the full disk" style="--fill:90.278%"></span></td>
+                <td headers="enc-family-1 enc-depth-velocity" role="cell" style="--target:5"><span class="enc-disk" role="img" aria-label="Filled area about 30% of the full disk" style="--fill:55.136%"></span></td>
+                <td headers="enc-family-1 enc-rotation-speed" role="cell" style="--target:6"><span class="enc-disk" role="img" aria-label="Filled area about 100% of the full disk" style="--fill:99.900%"></span></td>
+                <td headers="enc-family-1 enc-friction" role="cell" style="--target:7"><span class="enc-disk" role="img" aria-label="Filled area about 96% of the full disk" style="--fill:98.209%"></span></td>
+                <td headers="enc-family-1 enc-force" role="cell" style="--target:8"><span class="enc-disk" role="img" aria-label="Filled area about 93% of the full disk" style="--fill:96.695%"></span></td>
+                <td headers="enc-family-1 enc-permanence" role="cell" style="--target:9"><span class="enc-disk" role="img" aria-label="Filled area about 41% of the full disk" style="--fill:64.343%"></span></td>
+                <td headers="enc-family-1 enc-non-penetration" role="cell" style="--target:10"><span class="enc-disk" role="img" aria-label="Filled area about 9% of the full disk" style="--fill:30.659%"></span></td>
+                <td headers="enc-family-1 enc-collision" role="cell" style="--target:11"><span class="enc-disk" role="img" aria-label="Filled area about 94% of the full disk" style="--fill:96.851%"></span></td>
+                <td headers="enc-family-1 enc-future-motion" role="cell" style="--target:12"><span class="enc-disk" role="img" aria-label="Filled area about 90% of the full disk" style="--fill:94.658%"></span></td>
+                <td headers="enc-family-1 enc-future-rotation" role="cell" style="--target:13"><span class="enc-disk" role="img" aria-label="Filled area about 85% of the full disk" style="--fill:92.303%"></span></td>
+              </tr>
+              <tr role="row" style="--family:#a94c65;--mcol:4">
+                <th class="enc-family" scope="row" role="rowheader" id="enc-family-2"><span>Generative</span></th>
+                <td headers="enc-family-2 enc-mass" role="cell" style="--target:1"><span class="enc-disk" role="img" aria-label="Filled area about 67% of the full disk" style="--fill:81.822%"></span></td>
+                <td headers="enc-family-2 enc-material" role="cell" style="--target:2"><span class="enc-disk" role="img" aria-label="Filled area about 26% of the full disk" style="--fill:50.728%"></span></td>
+                <td headers="enc-family-2 enc-position" role="cell" style="--target:3"><span class="enc-disk" role="img" aria-label="Filled area about 98% of the full disk" style="--fill:99.247%"></span></td>
+                <td headers="enc-family-2 enc-lateral-velocity" role="cell" style="--target:4"><span class="enc-disk" role="img" aria-label="Filled area about 82% of the full disk" style="--fill:90.829%"></span></td>
+                <td headers="enc-family-2 enc-depth-velocity" role="cell" style="--target:5"><span class="enc-disk" role="img" aria-label="Filled area about 40% of the full disk" style="--fill:62.928%"></span></td>
+                <td headers="enc-family-2 enc-rotation-speed" role="cell" style="--target:6"><span class="enc-disk" role="img" aria-label="Filled area about 100% of the full disk" style="--fill:99.850%"></span></td>
+                <td headers="enc-family-2 enc-friction" role="cell" style="--target:7"><span class="enc-disk" role="img" aria-label="Filled area about 100% of the full disk" style="--fill:99.850%"></span></td>
+                <td headers="enc-family-2 enc-force" role="cell" style="--target:8"><span class="enc-disk" role="img" aria-label="Filled area about 95% of the full disk" style="--fill:97.621%"></span></td>
+                <td headers="enc-family-2 enc-permanence" role="cell" style="--target:9"><span class="enc-disk" role="img" aria-label="Filled area about 50% of the full disk" style="--fill:70.852%"></span></td>
+                <td headers="enc-family-2 enc-non-penetration" role="cell" style="--target:10"><span class="enc-disk" role="img" aria-label="Filled area about 10% of the full disk" style="--fill:32.249%"></span></td>
+                <td headers="enc-family-2 enc-collision" role="cell" style="--target:11"><span class="enc-disk" role="img" aria-label="Filled area about 81% of the full disk" style="--fill:89.888%"></span></td>
+                <td headers="enc-family-2 enc-future-motion" role="cell" style="--target:12"><span class="enc-disk" role="img" aria-label="Filled area about 97% of the full disk" style="--fill:98.540%"></span></td>
+                <td headers="enc-family-2 enc-future-rotation" role="cell" style="--target:13"><span class="enc-disk" role="img" aria-label="Filled area about 85% of the full disk" style="--fill:92.087%"></span></td>
+              </tr>
+              <tr role="row" style="--family:#765da1;--mcol:5">
+                <th class="enc-family" scope="row" role="rowheader" id="enc-family-3"><span>World model</span></th>
+                <td headers="enc-family-3 enc-mass" role="cell" style="--target:1"><span class="enc-disk" role="img" aria-label="Filled area about 62% of the full disk" style="--fill:79.003%"></span></td>
+                <td headers="enc-family-3 enc-material" role="cell" style="--target:2"><span class="enc-disk" role="img" aria-label="Filled area about 31% of the full disk" style="--fill:56.125%"></span></td>
+                <td headers="enc-family-3 enc-position" role="cell" style="--target:3"><span class="enc-disk" role="img" aria-label="Filled area about 99% of the full disk" style="--fill:99.298%"></span></td>
+                <td headers="enc-family-3 enc-lateral-velocity" role="cell" style="--target:4"><span class="enc-disk" role="img" aria-label="Filled area about 85% of the full disk" style="--fill:92.439%"></span></td>
+                <td headers="enc-family-3 enc-depth-velocity" role="cell" style="--target:5"><span class="enc-disk" role="img" aria-label="Filled area about 40% of the full disk" style="--fill:63.404%"></span></td>
+                <td headers="enc-family-3 enc-rotation-speed" role="cell" style="--target:6"><span class="enc-disk" role="img" aria-label="Filled area about 100% of the full disk" style="--fill:99.925%"></span></td>
+                <td headers="enc-family-3 enc-friction" role="cell" style="--target:7"><span class="enc-disk" role="img" aria-label="Filled area about 99% of the full disk" style="--fill:99.700%"></span></td>
+                <td headers="enc-family-3 enc-force" role="cell" style="--target:8"><span class="enc-disk" role="img" aria-label="Filled area about 95% of the full disk" style="--fill:97.724%"></span></td>
+                <td headers="enc-family-3 enc-permanence" role="cell" style="--target:9"><span class="enc-disk" role="img" aria-label="Filled area about 49% of the full disk" style="--fill:70.286%"></span></td>
+                <td headers="enc-family-3 enc-non-penetration" role="cell" style="--target:10"><span class="enc-disk" role="img" aria-label="Filled area about 17% of the full disk" style="--fill:41.231%"></span></td>
+                <td headers="enc-family-3 enc-collision" role="cell" style="--target:11"><span class="enc-disk" role="img" aria-label="Filled area about 77% of the full disk" style="--fill:87.864%"></span></td>
+                <td headers="enc-family-3 enc-future-motion" role="cell" style="--target:12"><span class="enc-disk" role="img" aria-label="Filled area about 96% of the full disk" style="--fill:98.082%"></span></td>
+                <td headers="enc-family-3 enc-future-rotation" role="cell" style="--target:13"><span class="enc-disk" role="img" aria-label="Filled area about 85% of the full disk" style="--fill:91.979%"></span></td>
+              </tr>
+              <tr role="row" style="--family:#937422;--mcol:6">
+                <th class="enc-family" scope="row" role="rowheader" id="enc-family-4"><span>Vision-language</span></th>
+                <td headers="enc-family-4 enc-mass" role="cell" style="--target:1"><span class="enc-disk" role="img" aria-label="Filled area about 79% of the full disk" style="--fill:88.981%"></span></td>
+                <td headers="enc-family-4 enc-material" role="cell" style="--target:2"><span class="enc-disk" role="img" aria-label="Filled area about 64% of the full disk" style="--fill:79.750%"></span></td>
+                <td headers="enc-family-4 enc-position" role="cell" style="--target:3"><span class="enc-disk" role="img" aria-label="Filled area about 98% of the full disk" style="--fill:98.945%"></span></td>
+                <td headers="enc-family-4 enc-lateral-velocity" role="cell" style="--target:4"><span class="enc-disk" role="img" aria-label="Filled area about 10% of the full disk" style="--fill:31.780%"></span></td>
+                <td headers="enc-family-4 enc-depth-velocity" role="cell" style="--target:5"><span class="enc-disk" role="img" aria-label="At the chance baseline" style="--fill:0.000%"></span></td>
+                <td headers="enc-family-4 enc-rotation-speed" role="cell" style="--target:6"><span class="enc-disk" role="img" aria-label="Filled area about 100% of the full disk" style="--fill:99.900%"></span></td>
+                <td headers="enc-family-4 enc-friction" role="cell" style="--target:7"><span class="enc-disk" role="img" aria-label="Filled area about 97% of the full disk" style="--fill:98.336%"></span></td>
+                <td headers="enc-family-4 enc-force" role="cell" style="--target:8"><span class="enc-disk" role="img" aria-label="Filled area about 90% of the full disk" style="--fill:94.710%"></span></td>
+                <td headers="enc-family-4 enc-permanence" role="cell" style="--target:9"><span class="enc-disk" role="img" aria-label="At the chance baseline" style="--fill:0.000%"></span></td>
+                <td headers="enc-family-4 enc-non-penetration" role="cell" style="--target:10"><span class="enc-disk" role="img" aria-label="Filled area about 8% of the full disk" style="--fill:28.284%"></span></td>
+                <td headers="enc-family-4 enc-collision" role="cell" style="--target:11"><span class="enc-disk" role="img" aria-label="Filled area about 63% of the full disk" style="--fill:79.372%"></span></td>
+                <td headers="enc-family-4 enc-future-motion" role="cell" style="--target:12"><span class="enc-disk" role="img" aria-label="Filled area about 88% of the full disk" style="--fill:93.862%"></span></td>
+                <td headers="enc-family-4 enc-future-rotation" role="cell" style="--target:13"><span class="enc-disk" role="img" aria-label="Filled area about 47% of the full disk" style="--fill:68.630%"></span></td>
+              </tr>
+              <tr role="row" style="--family:#495e91;--mcol:7">
+                <th class="enc-family" scope="row" role="rowheader" id="enc-family-5"><span>Geometry</span></th>
+                <td headers="enc-family-5 enc-mass" role="cell" style="--target:1"><span class="enc-disk" role="img" aria-label="Filled area about 72% of the full disk" style="--fill:85.104%"></span></td>
+                <td headers="enc-family-5 enc-material" role="cell" style="--target:2"><span class="enc-disk" role="img" aria-label="Filled area about 53% of the full disk" style="--fill:72.491%"></span></td>
+                <td headers="enc-family-5 enc-position" role="cell" style="--target:3"><span class="enc-disk" role="img" aria-label="Filled area about 98% of the full disk" style="--fill:99.079%"></span></td>
+                <td headers="enc-family-5 enc-lateral-velocity" role="cell" style="--target:4"><span class="enc-disk" role="img" aria-label="Filled area about 22% of the full disk" style="--fill:47.011%"></span></td>
+                <td headers="enc-family-5 enc-depth-velocity" role="cell" style="--target:5"><span class="enc-disk" role="img" aria-label="Filled area about 47% of the full disk" style="--fill:68.288%"></span></td>
+                <td headers="enc-family-5 enc-rotation-speed" role="cell" style="--target:6"><span class="enc-disk" role="img" aria-label="Filled area about 9% of the full disk" style="--fill:29.155%"></span></td>
+                <td headers="enc-family-5 enc-friction" role="cell" style="--target:7"><span class="enc-disk" role="img" aria-label="Filled area about 94% of the full disk" style="--fill:96.953%"></span></td>
+                <td headers="enc-family-5 enc-force" role="cell" style="--target:8"><span class="enc-disk" role="img" aria-label="Filled area about 79% of the full disk" style="--fill:89.013%"></span></td>
+                <td headers="enc-family-5 enc-permanence" role="cell" style="--target:9"><span class="enc-disk" role="img" aria-label="At the chance baseline" style="--fill:0.000%"></span></td>
+                <td headers="enc-family-5 enc-non-penetration" role="cell" style="--target:10"><span class="enc-disk" role="img" aria-label="Filled area about 10% of the full disk" style="--fill:31.305%"></span></td>
+                <td headers="enc-family-5 enc-collision" role="cell" style="--target:11"><span class="enc-disk" role="img" aria-label="Filled area about 65% of the full disk" style="--fill:80.746%"></span></td>
+                <td headers="enc-family-5 enc-future-motion" role="cell" style="--target:12"><span class="enc-disk" role="img" aria-label="Filled area about 66% of the full disk" style="--fill:80.994%"></span></td>
+                <td headers="enc-family-5 enc-future-rotation" role="cell" style="--target:13"><span class="enc-disk" role="img" aria-label="Filled area about 4% of the full disk" style="--fill:18.974%"></span></td>
+              </tr>
+              <tr role="row" style="--family:#657d3d;--mcol:8">
+                <th class="enc-family" scope="row" role="rowheader" id="enc-family-6"><span>Tactile</span></th>
+                <td headers="enc-family-6 enc-mass" role="cell" style="--target:1"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-material" role="cell" style="--target:2"><span class="enc-disk" role="img" aria-label="Filled area about 85% of the full disk" style="--fill:92.293%"></span></td>
+                <td headers="enc-family-6 enc-position" role="cell" style="--target:3"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-lateral-velocity" role="cell" style="--target:4"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-depth-velocity" role="cell" style="--target:5"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-rotation-speed" role="cell" style="--target:6"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-friction" role="cell" style="--target:7"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-force" role="cell" style="--target:8"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-permanence" role="cell" style="--target:9"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-non-penetration" role="cell" style="--target:10"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-collision" role="cell" style="--target:11"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-future-motion" role="cell" style="--target:12"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-6 enc-future-rotation" role="cell" style="--target:13"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+              </tr>
+              <tr role="row" style="--family:#805789;--mcol:9">
+                <th class="enc-family" scope="row" role="rowheader" id="enc-family-7"><span>Audio</span></th>
+                <td headers="enc-family-7 enc-mass" role="cell" style="--target:1"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-material" role="cell" style="--target:2"><span class="enc-disk" role="img" aria-label="Filled area about 47% of the full disk" style="--fill:68.702%"></span></td>
+                <td headers="enc-family-7 enc-position" role="cell" style="--target:3"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-lateral-velocity" role="cell" style="--target:4"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-depth-velocity" role="cell" style="--target:5"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-rotation-speed" role="cell" style="--target:6"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-friction" role="cell" style="--target:7"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-force" role="cell" style="--target:8"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-permanence" role="cell" style="--target:9"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-non-penetration" role="cell" style="--target:10"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-collision" role="cell" style="--target:11"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-future-motion" role="cell" style="--target:12"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+                <td headers="enc-family-7 enc-future-rotation" role="cell" style="--target:13"><span class="enc-gap" role="img" aria-label="Not tested"></span></td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption id="encoded-caption">
+            <span class="enc-key">
+              <strong>Probe score</strong>
+              <span>Chance</span>
+              <span class="enc-scale" aria-hidden="true"><i class="enc-disk"></i><i class="enc-disk" style="--fill:70.71%"></i><i class="enc-disk" style="--fill:100%"></i></span>
+              <span>Perfect</span>
+              <span class="enc-untested">Blank = untested</span>
+            </span>
+            <p class="enc-note" id="encoded-note">Depth velocity and non-penetration are difficult to read across visual families. Touch and audio were tested on material only.</p>
+          </figcaption>
+        </figure>
+        <div class="finding-note">
+          <h3>Object Properties</h3>
+          <p>A photograph can give clues to an object’s mass. For material, we can also measure what a surface feels like under contact or what it sounds like when struck.</p>
         </div>
         <div class="modalities">
           <figure class="modality"><div class="sample"><img src="assets/vision.webp" alt="Optical photograph of a perforated surface, RCT material 0701420" loading="lazy"><span class="crop-mark"></span></div>
-            <figcaption><h3>Vision</h3><p>All 16 visual models recover object mass. Their errors range from 0.71 to 1.34 bits, against 3.42 bits for a constant prediction.</p></figcaption></figure>
+            <figcaption><h4>Vision</h4><p>All 16 visual models recover object mass. Their errors range from 0.71 to 1.34 bits, against 3.42 bits for a constant prediction.</p></figcaption></figure>
           <figure class="modality"><div class="sample"><img src="assets/touch.webp" alt="Colored contact imprint from the same perforated surface, RCT sensor 1, frame 15" loading="lazy"><span class="crop-mark"></span></div>
-            <figcaption><h3>Touch</h3><p>SPARSH-MAE distinguishes materials by touch at 0.949 AUROC. I-JEPA, trained on images, reaches 0.947.</p></figcaption></figure>
+            <figcaption><h4>Touch</h4><p>SPARSH-MAE distinguishes materials by touch at 0.949 AUROC. I-JEPA, trained on images, reaches 0.947.</p></figcaption></figure>
           <figure class="modality"><div class="sample"><img src="assets/sound.webp" alt="Spectrogram of the first 300 milliseconds of a RealImpact recording, with time increasing to the right and frequency upward" loading="lazy"><span class="crop-mark"></span></div>
-            <figcaption><h3>Sound</h3><p>Material discrimination from impact sounds reaches 0.736 mean AUROC. A random-weight audio encoder reaches 0.704.</p></figcaption></figure>
+            <figcaption><h4>Sound</h4><p>Material discrimination from impact sounds reaches 0.736 mean AUROC. A random-weight audio encoder reaches 0.704.</p></figcaption></figure>
         </div>
-        <p class="media-note">The photograph and contact imprint show the same <a href="https://faerber-lab.github.io/RCT/">RCT</a> material. The spectrogram shows the first 300 ms of a <a href="https://samuelpclarke.com/realimpact/">RealImpact</a> recording.</p>
+        <div class="finding-pair">
+          <article class="finding-note"><h3>Physical States and Dynamical Factors</h3><p>All ten models tested locate the object accurately. Tracking how fast it moves toward the camera is harder. The temporal models reach R² of 0.30–0.42 for depth velocity, while VGGT reaches 0.726.</p></article>
+          <article class="finding-note"><h3>Accessibility Across Layers and Scales</h3><p>The best layer depends on both the model and the quantity. Mass is easier to read from deeper layers in DINOv3 and V-JEPA 2.1, but from intermediate layers in LTX-2.5 and Cosmos.</p></article>
+        </div>
       </div></section>
 
-      <section data-ark-depth="moderate" id="observations" class="observations section" aria-labelledby="obs-title"><div class="shell obs-layout">
-        <div class="obs-copy"><p class="overline"><span class="bars" aria-hidden="true"></span>Observation controls</p>
-          <h2 id="obs-title">Same mass.<br><em>Different shape.</em></h2>
-          <p>A box-trained mass readout falls below the mean baseline on cylinders. Fitting the readout to cylinder features restores its score. The encoder stays frozen throughout.</p>
-        </div>
-        <figure class="transfer"><figcaption><span>Mass readout under a shape change</span><small>V-JEPA 2.1 · Test R²</small></figcaption>
-          <div class="bar-chart">
-            <div class="bar-row"><span>Original boxes</span><div class="bar-track t-box"><i style="--start:40%;--length:56.76%"></i></div><b>0.946</b></div>
-            <div class="bar-row"><span>Cylinders · fixed</span><div class="bar-track t-fixed"><i style="--start:6.76%;--length:33.24%"></i></div><b>−0.554</b></div>
-            <div class="bar-row"><span>Cylinders · refit</span><div class="bar-track t-refit"><i style="--start:40%;--length:56.94%"></i></div><b>0.949</b></div>
-            <div class="bar-axis" aria-hidden="true"><span>−0.5</span><span>0</span><span>0.5</span><span>1.0</span></div>
+      <section data-ark-depth="moderate" id="observations" class="observations section" aria-labelledby="obs-title"><div class="shell">
+        <header class="probe-heading probe-heading--aligned">
+          <p class="overline"><span class="bars" aria-hidden="true"></span>Observation controls</p>
+          <h2 id="obs-title">Which Cues Do Physical <em>Readouts Use?</em></h2>
+          <p class="probe-intro">If a model can estimate mass, would the same readout work from a different camera angle? Each clip pairs the original input with a control. The fixed score tests transfer. The refitted score tells us how much information a new readout can recover.</p>
+        </header>
+        <section class="control-deck" id="observation-controls" aria-label="Genesis observation controls">
+          <div class="control-deck__nav" hidden>
+            <button type="button" data-step="-1" aria-label="Previous observation control"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg></button>
+            <p data-family></p>
+            <button type="button" data-step="1" aria-label="Next observation control"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
           </div>
-          <p class="fig-note">Fixed uses the original readout. Refit learns a new readout on the changed observations. A negative R² scores below a constant mean prediction.</p>
-        </figure>
-        <figure class="matched"><figcaption><h3>Matched trajectories</h3><p>Two shapes slide under the same applied force. The camera and sampling times are identical.</p><dl><div><dt>Mass</dt><dd>0.50 kg</dd></div><div><dt>Force</dt><dd>3.0 N</dd></div></dl></figcaption>
-          <div class="frames"><div class="time-labels"><span>0.00 s</span><span>0.47 s</span><span>1.00 s</span></div>
-            <div class="frame-label">Box</div><img src="assets/genesis-box.webp" alt="Three aligned frames show a blue box sliding to the right." width="676" height="128" loading="lazy">
-            <div class="frame-label">Cylinder</div><img src="assets/genesis-cylinder.webp" alt="A blue cylinder follows the same displacement over the three sample times." width="676" height="128" loading="lazy">
+          <div class="control-deck__slides">
+            <figure class="matched" id="control-yaw" data-family="Viewpoint">
+              <div class="trajectory-pair">
+                <div class="trajectory-labels" aria-hidden="true"><span>Original view</span><span>35° yaw</span></div>
+                <video controls muted playsinline preload="none" width="448" height="126" poster="assets/genesis-camera-yaw-poster.webp" src="assets/genesis-camera-yaw.mp4?v=single-trial" aria-label="Genesis viewpoint comparison. Left: Original view. Right: 35° yaw.">
+                  <a href="assets/genesis-camera-yaw.mp4?v=single-trial">Open comparison video</a>
+                </video>
+                <p class="trajectory-details"><span>Genesis · varying mass</span><span>1 s · 32 fps</span></p>
+              </div>
+              <figcaption>
+                <h3>Rotate the camera <span class="display-angle">35°</span></h3>
+                <p>The same box trajectory is rendered from a second camera, rotated horizontally by 35°. The object states, physical labels and data splits stay fixed. Refitting the readout recovers the mass signal.</p>
+                <div class="shape-scores">
+                  <p class="shape-scores-title">V-JEPA 2.1 · mass · test R²</p>
+                  <dl>
+                    <div><dt>Original</dt><dd>0.946</dd></div>
+                    <div><dt>Fixed probe</dt><dd>0.781</dd></div>
+                    <div><dt>Refit probe</dt><dd>0.954</dd></div>
+                  </dl>
+                </div>
+              </figcaption>
+            </figure>
+            <figure class="matched" id="control-elevation" data-family="Viewpoint">
+              <div class="trajectory-pair">
+                <div class="trajectory-labels" aria-hidden="true"><span>Original view</span><span>+15° elevation</span></div>
+                <video controls muted playsinline preload="none" width="448" height="126" poster="assets/genesis-camera-elevation-poster.webp" src="assets/genesis-camera-elevation.mp4?v=single-trial" aria-label="Genesis viewpoint comparison. Left: Original view. Right: +15° elevation.">
+                  <a href="assets/genesis-camera-elevation.mp4?v=single-trial">Open comparison video</a>
+                </video>
+                <p class="trajectory-details"><span>Genesis · varying mass</span><span>1 s · 32 fps</span></p>
+              </div>
+              <figcaption>
+                <h3>Raise the camera <span class="display-angle">15°</span></h3>
+                <p>The camera looks down more steeply on the same motion. The original mass probe loses accuracy from this higher viewpoint, while a probe fitted to elevated views reaches the original score again.</p>
+                <div class="shape-scores">
+                  <p class="shape-scores-title">V-JEPA 2.1 · mass · test R²</p>
+                  <dl>
+                    <div><dt>Original</dt><dd>0.946</dd></div>
+                    <div><dt>Fixed probe</dt><dd>0.686</dd></div>
+                    <div><dt>Refit probe</dt><dd>0.950</dd></div>
+                  </dl>
+                </div>
+              </figcaption>
+            </figure>
+            <figure class="matched" id="control-new-boxes" data-family="Independent trials">
+              <div class="trajectory-pair">
+                <div class="trajectory-labels" aria-hidden="true"><span>Original box trial</span><span>New box trial</span></div>
+                <video controls muted playsinline preload="none" width="768" height="192" poster="assets/genesis-new-boxes-poster.webp?v=full-trial" src="assets/genesis-new-boxes.mp4?v=single-trial" aria-label="Genesis independent trials comparison. Left: Original box trial. Right: New box trial.">
+                  <a href="assets/genesis-new-boxes.mp4?v=single-trial">Open comparison video</a>
+                </video>
+                <p class="trajectory-details"><span>Genesis · varying mass</span><span>2 s · 32 fps</span></p>
+              </div>
+              <figcaption>
+                <h3>New trials, same shape</h3>
+                <p>A second set of box trials measures how much the readout shifts even when the shape stays the same. The two trials shown share a camera, a mass of 0.50 kg and an applied force of 3.0 N. Their starting conditions were sampled independently.</p>
+                <div class="shape-scores">
+                  <p class="shape-scores-title">V-JEPA 2.1 · mass · test R²</p>
+                  <dl>
+                    <div><dt>Original</dt><dd>0.946</dd></div>
+                    <div><dt>Fixed probe</dt><dd>0.666</dd></div>
+                    <div><dt>Refit probe</dt><dd>0.959</dd></div>
+                  </dl>
+                </div>
+              </figcaption>
+            </figure>
+            <figure class="matched" id="matched-trajectories" data-family="Shape">
+              <div class="trajectory-pair">
+                <div class="trajectory-labels" aria-hidden="true"><span>Matched box</span><span>Matched cylinder</span></div>
+                <video controls muted playsinline preload="none" width="768" height="192" poster="assets/genesis-shape-pair-poster.webp" src="assets/genesis-shape-pair.mp4?v=single-trial" aria-label="Genesis shape comparison. Left: Matched box. Right: Matched cylinder.">
+                  <a href="assets/genesis-shape-pair.mp4?v=single-trial">Open comparison video</a>
+                </video>
+                <p class="trajectory-details"><span>Genesis · varying mass</span><span>2 s · 32 fps</span></p>
+              </div>
+              <figcaption>
+                <h3>From boxes to cylinders</h3>
+                <p>The cylinder matches the box in height, base area, volume and mass. Both objects shown receive the same 3.0 N force. The box-trained mass probe gives a negative test R² on cylinders, and refitting restores its accuracy.</p>
+                <div class="shape-scores">
+                  <p class="shape-scores-title">V-JEPA 2.1 · mass · test R²</p>
+                  <dl>
+                    <div><dt>Original</dt><dd>0.946</dd></div>
+                    <div><dt>Fixed probe</dt><dd>−0.554</dd></div>
+                    <div><dt>Refit probe</dt><dd>0.949</dd></div>
+                  </dl>
+                </div>
+              </figcaption>
+            </figure>
+            <figure class="matched" id="control-first-frame" data-family="Static frame">
+              <div class="trajectory-pair">
+                <div class="trajectory-labels" aria-hidden="true"><span>Forward sequence</span><span>First frame repeated</span></div>
+                <video controls muted playsinline preload="none" width="448" height="126" poster="assets/genesis-repeat-first-poster.webp" src="assets/genesis-repeat-first.mp4?v=single-trial" aria-label="Genesis static frame comparison. Left: Forward sequence. Right: First frame repeated.">
+                  <a href="assets/genesis-repeat-first.mp4?v=single-trial">Open comparison video</a>
+                </video>
+                <p class="trajectory-details"><span>Genesis · varying friction</span><span>1 s · 32 fps</span></p>
+              </div>
+              <figcaption>
+                <h3>Repeat the first frame</h3>
+                <p>The first observed frame fills all 32 input positions. The refitted probe recovers little about mean speed. In the separate six-material trials, V-JEPA 2.1 still reaches 1.000 balanced accuracy for material after refitting.</p>
+                <div class="shape-scores">
+                  <p class="shape-scores-title">V-JEPA 2.1 · mean speed · test R²</p>
+                  <dl>
+                    <div><dt>Original</dt><dd>0.992</dd></div>
+                    <div><dt>Fixed probe</dt><dd>−5.825</dd></div>
+                    <div><dt>Refit probe</dt><dd>−0.012</dd></div>
+                  </dl>
+                </div>
+              </figcaption>
+            </figure>
+            <figure class="matched" id="control-last-frame" data-family="Static frame">
+              <div class="trajectory-pair">
+                <div class="trajectory-labels" aria-hidden="true"><span>Forward sequence</span><span>Last frame repeated</span></div>
+                <video controls muted playsinline preload="none" width="448" height="126" poster="assets/genesis-repeat-last-poster.webp" src="assets/genesis-repeat-last.mp4?v=single-trial" aria-label="Genesis static frame comparison. Left: Forward sequence. Right: Last frame repeated.">
+                  <a href="assets/genesis-repeat-last.mp4?v=single-trial">Open comparison video</a>
+                </video>
+                <p class="trajectory-details"><span>Genesis · varying friction</span><span>1 s · 32 fps</span></p>
+              </div>
+              <figcaption>
+                <h3>Repeat the last frame</h3>
+                <p>The last frame of the observation window fills every input position. Even without motion between frames, the final position carries a strong speed cue in these trajectories. Refitted mean-speed R² spans 0.951–0.995 across the six models.</p>
+                <div class="shape-scores">
+                  <p class="shape-scores-title">V-JEPA 2.1 · mean speed · test R²</p>
+                  <dl>
+                    <div><dt>Original</dt><dd>0.992</dd></div>
+                    <div><dt>Fixed probe</dt><dd>0.275</dd></div>
+                    <div><dt>Refit probe</dt><dd>0.951</dd></div>
+                  </dl>
+                </div>
+              </figcaption>
+            </figure>
+            <figure class="matched" id="control-shuffle" data-family="Temporal order">
+              <div class="trajectory-pair">
+                <div class="trajectory-labels" aria-hidden="true"><span>Forward sequence</span><span>Shuffled pairs</span></div>
+                <video controls muted playsinline preload="none" width="448" height="126" poster="assets/genesis-order-shuffle-poster.webp" src="assets/genesis-order-shuffle.mp4?v=single-trial" aria-label="Genesis temporal order comparison. Left: Forward sequence. Right: Shuffled pairs.">
+                  <a href="assets/genesis-order-shuffle.mp4?v=single-trial">Open comparison video</a>
+                </video>
+                <p class="trajectory-details"><span>Genesis · varying friction</span><span>1 s · 32 fps</span></p>
+              </div>
+              <figcaption>
+                <h3>Shuffle two-frame blocks</h3>
+                <p>The 32 frames are split into 16 adjacent pairs. The pairs move to new positions, while the two frames inside each pair keep their order. V-JEPA 2.1’s original speed readout loses accuracy on the shuffled sequence.</p>
+                <div class="shape-scores">
+                  <p class="shape-scores-title">V-JEPA 2.1 · mean speed · test R²</p>
+                  <dl>
+                    <div><dt>Original</dt><dd>0.992</dd></div>
+                    <div><dt>Fixed probe</dt><dd>0.680</dd></div>
+                    <div><dt>Refit probe</dt><dd>0.989</dd></div>
+                  </dl>
+                </div>
+              </figcaption>
+            </figure>
+            <figure class="matched" id="control-reverse" data-family="Temporal order">
+              <div class="trajectory-pair">
+                <div class="trajectory-labels" aria-hidden="true"><span>Forward sequence</span><span>Reverse order</span></div>
+                <video controls muted playsinline preload="none" width="448" height="126" poster="assets/genesis-order-reverse-poster.webp" src="assets/genesis-order-reverse.mp4?v=single-trial" aria-label="Genesis temporal order comparison. Left: Forward sequence. Right: Reverse order.">
+                  <a href="assets/genesis-order-reverse.mp4?v=single-trial">Open comparison video</a>
+                </video>
+                <p class="trajectory-details"><span>Genesis · varying friction</span><span>1 s · 32 fps</span></p>
+              </div>
+              <figcaption>
+                <h3>Reverse the sequence</h3>
+                <p>The same 32 frames play in reverse, with the labels from the original forward trajectory. A refitted probe recovers mean speed just as accurately from the reversed input.</p>
+                <div class="shape-scores">
+                  <p class="shape-scores-title">V-JEPA 2.1 · mean speed · test R²</p>
+                  <dl>
+                    <div><dt>Original</dt><dd>0.992</dd></div>
+                    <div><dt>Fixed probe</dt><dd>0.855</dd></div>
+                    <div><dt>Refit probe</dt><dd>0.992</dd></div>
+                  </dl>
+                </div>
+              </figcaption>
+            </figure>
           </div>
+          <div class="control-deck__foot">
+            <span class="sr-only">Slide </span><span data-position></span>
+          </div>
+          <span class="sr-only" role="status" data-announcement></span>
+        </section>
+        <figure class="transfer-results" aria-labelledby="transfer-figure-title">
+          <figcaption>
+            <h3 id="transfer-figure-title">Readout scores across four observation changes</h3>
+            <p>Each fine line tracks one model under one change. The bold lines and table give the mean across the four changes.</p>
+          </figcaption>
+          <div class="transfer-display">
+            <div class="transfer-chart">
+              <div class="transfer-unit">Mean probe score</div>
+              <div class="transfer-field">
+                <div class="transfer-ticks" aria-hidden="true"><span>1.0</span><span>0.5</span><span>0.0</span></div>
+                <svg class="transfer-plot" role="img" aria-labelledby="transfer-plot-title transfer-plot-desc" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                  <title id="transfer-plot-title">Original, fixed and refitted probe scores</title>
+                  <desc id="transfer-plot-desc">All six models score lower on average when their original probe is tested on changed observations. Fitting a new probe brings the scores close to their original values. The adjacent table gives the mean scores.</desc>
+                  <g class="transfer-grid" aria-hidden="true">
+                    <line x1="0" x2="100%" y1="0" y2="0"/><line x1="0" x2="100%" y1="50%" y2="50%"/><line x1="0" x2="100%" y1="100%" y2="100%"/>
+                    <line x1="0" x2="0" y1="0" y2="100%"/><line x1="50%" x2="50%" y1="0" y2="100%"/><line x1="100%" x2="100%" y1="0" y2="100%"/>
+                  </g>
+                  <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none" overflow="visible" aria-hidden="true">
+                    <g class="transfer-traces">
+                      <g class="transfer-image">
+                        <path d="M0 18.700 L50 95.633 100 12.333"><title>DINOv3 · 35° camera yaw · 0.813 → 0.044 → 0.877</title></path>
+                        <path d="M0 18.700 L50 68.067 100 35.367"><title>DINOv3 · 15° camera elevation · 0.813 → 0.319 → 0.646</title></path>
+                        <path d="M0 18.700 L50 77.367 100 9.267"><title>DINOv3 · New box trials · 0.813 → 0.226 → 0.907</title></path>
+                        <path d="M0 18.700 L50 100.000 100 11.667"><title>DINOv3 · Cylinders · 0.813 → 0.000 → 0.883</title></path>
+                      </g>
+                      <g class="transfer-video">
+                        <path d="M0 3.067 L50 48.867 100 2.267"><title>V-JEPA 2.1 · 35° camera yaw · 0.969 → 0.511 → 0.977</title></path>
+                        <path d="M0 3.067 L50 15.000 100 2.467"><title>V-JEPA 2.1 · 15° camera elevation · 0.969 → 0.850 → 0.975</title></path>
+                        <path d="M0 3.067 L50 15.067 100 1.833"><title>V-JEPA 2.1 · New box trials · 0.969 → 0.849 → 0.982</title></path>
+                        <path d="M0 3.067 L50 73.900 100 2.167"><title>V-JEPA 2.1 · Cylinders · 0.969 → 0.261 → 0.978</title></path>
+                      </g>
+                      <g class="transfer-language">
+                        <path d="M0 3.000 L50 58.933 100 4.333"><title>Qwen3-VL · 35° camera yaw · 0.970 → 0.411 → 0.957</title></path>
+                        <path d="M0 3.000 L50 9.733 100 4.800"><title>Qwen3-VL · 15° camera elevation · 0.970 → 0.903 → 0.952</title></path>
+                        <path d="M0 3.000 L50 24.967 100 3.233"><title>Qwen3-VL · New box trials · 0.970 → 0.750 → 0.968</title></path>
+                        <path d="M0 3.000 L50 50.333 100 2.800"><title>Qwen3-VL · Cylinders · 0.970 → 0.497 → 0.972</title></path>
+                      </g>
+                      <g class="transfer-geometry">
+                        <path d="M0 20.767 L50 100.000 100 22.633"><title>VGGT · 35° camera yaw · 0.792 → 0.000 → 0.774</title></path>
+                        <path d="M0 20.767 L50 86.667 100 35.500"><title>VGGT · 15° camera elevation · 0.792 → 0.133 → 0.645</title></path>
+                        <path d="M0 20.767 L50 100.000 100 23.900"><title>VGGT · New box trials · 0.792 → 0.000 → 0.761</title></path>
+                        <path d="M0 20.767 L50 100.000 100 9.733"><title>VGGT · Cylinders · 0.792 → 0.000 → 0.903</title></path>
+                      </g>
+                      <g class="transfer-generative">
+                        <path d="M0 0.933 L50 29.500 100 1.033"><title>LTX-2.5 · 35° camera yaw · 0.991 → 0.705 → 0.990</title></path>
+                        <path d="M0 0.933 L50 4.200 100 1.367"><title>LTX-2.5 · 15° camera elevation · 0.991 → 0.958 → 0.986</title></path>
+                        <path d="M0 0.933 L50 5.167 100 0.467"><title>LTX-2.5 · New box trials · 0.991 → 0.948 → 0.995</title></path>
+                        <path d="M0 0.933 L50 4.667 100 0.667"><title>LTX-2.5 · Cylinders · 0.991 → 0.953 → 0.993</title></path>
+                      </g>
+                      <g class="transfer-world">
+                        <path d="M0 0.900 L50 53.833 100 1.267"><title>Cosmos-Predict2.5 · 35° camera yaw · 0.991 → 0.462 → 0.987</title></path>
+                        <path d="M0 0.900 L50 4.567 100 0.967"><title>Cosmos-Predict2.5 · 15° camera elevation · 0.991 → 0.954 → 0.990</title></path>
+                        <path d="M0 0.900 L50 6.167 100 0.700"><title>Cosmos-Predict2.5 · New box trials · 0.991 → 0.938 → 0.993</title></path>
+                        <path d="M0 0.900 L50 9.567 100 0.533"><title>Cosmos-Predict2.5 · Cylinders · 0.991 → 0.904 → 0.995</title></path>
+                      </g>
+                    </g>
+                    <g class="transfer-means">
+                      <g class="transfer-image"><path d="M0 18.700 L50 85.267 100 17.158"/></g>
+                      <g class="transfer-video"><path d="M0 3.067 L50 38.208 100 2.183"/></g>
+                      <g class="transfer-language"><path d="M0 3.000 L50 35.992 100 3.792"/></g>
+                      <g class="transfer-geometry"><path d="M0 20.767 L50 96.667 100 22.942"/></g>
+                      <g class="transfer-generative"><path d="M0 0.933 L50 10.883 100 0.883"/></g>
+                      <g class="transfer-world"><path d="M0 0.900 L50 18.533 100 0.867"/></g>
+                    </g>
+                  </svg>
+                  <g class="transfer-points" aria-hidden="true">
+                    <g class="transfer-image"><circle cx="0%" cy="18.700%" r="3.7"/><circle cx="50%" cy="85.267%" r="3.7"/><circle cx="100%" cy="17.158%" r="3.7"/></g>
+                    <g class="transfer-video"><circle cx="0%" cy="3.067%" r="3.7"/><circle cx="50%" cy="38.208%" r="3.7"/><circle cx="100%" cy="2.183%" r="3.7"/></g>
+                    <g class="transfer-language"><circle cx="0%" cy="3.000%" r="3.7"/><circle cx="50%" cy="35.992%" r="3.7"/><circle cx="100%" cy="3.792%" r="3.7"/></g>
+                    <g class="transfer-geometry"><circle cx="0%" cy="20.767%" r="3.7"/><circle cx="50%" cy="96.667%" r="3.7"/><circle cx="100%" cy="22.942%" r="3.7"/></g>
+                    <g class="transfer-generative"><circle cx="0%" cy="0.933%" r="3.7"/><circle cx="50%" cy="10.883%" r="3.7"/><circle cx="100%" cy="0.883%" r="3.7"/></g>
+                    <g class="transfer-world"><circle cx="0%" cy="0.900%" r="3.7"/><circle cx="50%" cy="18.533%" r="3.7"/><circle cx="100%" cy="0.867%" r="3.7"/></g>
+                  </g>
+                </svg>
+              </div>
+              <div class="transfer-stages" aria-hidden="true"><span>Original probe</span><span>Fixed probe</span><span>Refitted probe</span></div>
+            </div>
+            <table class="transfer-scores">
+              <caption class="sr-only">Mean probe scores across the four observation changes</caption>
+              <thead><tr><th scope="col">Model</th><th scope="col">Original</th><th scope="col">Fixed</th><th scope="col">Refit</th></tr></thead>
+              <tbody>
+                <tr class="transfer-image"><th scope="row"><i aria-hidden="true"></i>DINOv3</th><td>0.813</td><td>0.147</td><td>0.828</td></tr>
+                <tr class="transfer-video"><th scope="row"><i aria-hidden="true"></i>V-JEPA 2.1</th><td>0.969</td><td>0.618</td><td>0.978</td></tr>
+                <tr class="transfer-language"><th scope="row"><i aria-hidden="true"></i>Qwen3-VL</th><td>0.970</td><td>0.640</td><td>0.962</td></tr>
+                <tr class="transfer-geometry"><th scope="row"><i aria-hidden="true"></i>VGGT</th><td>0.792</td><td>0.033</td><td>0.771</td></tr>
+                <tr class="transfer-generative"><th scope="row"><i aria-hidden="true"></i>LTX-2.5</th><td>0.991</td><td>0.891</td><td>0.991</td></tr>
+                <tr class="transfer-world"><th scope="row"><i aria-hidden="true"></i>Cosmos-Predict2.5</th><td>0.991</td><td>0.815</td><td>0.991</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="transfer-method">The four changes are a 35° camera yaw, a 15° camera elevation, new box trials and cylinder trials. Each score averages test R² for mass, mean speed and friction, with each R² clipped to [0, 1].</p>
         </figure>
-        <aside class="last-frame"><div class="last-figure"><strong>0.951–0.995</strong><span>Test R² · mean speed</span></div><p><b>One frame carries a surprising amount of motion information.</b> Across six models on Genesis trajectories, a readout refit on the final frame alone recovers mean speed. Refitting on the first frame yields little signal.</p></aside>
       </div></section>
 
       <section data-ark-depth="moderate" class="events section" id="events" aria-labelledby="events-title"><div class="shell">
-        <p class="overline on-dark"><span class="bars" aria-hidden="true"></span>Event judgments</p>
-        <div class="event-head"><h2 id="events-title">Seeing a collision.<br><em>Judging a violation.</em></h2>
-          <p>All six models expose evidence of observed collisions. Judging whether solid objects pass through each other stays close to chance across the same models.</p></div>
-        <figure class="event-figure"><figcaption><span>Event readout performance</span><span class="chart-unit">AUROC · higher is better</span></figcaption>
-          <table class="range-table"><thead><tr><th scope="col">Model</th><th scope="col" class="metric-np"><span class="point hollow"></span><span>Non-penetration</span></th><th scope="col" aria-hidden="true"><div class="x-axis"><span>.50</span><span>.60</span><span>.70</span><span>.80</span><span>.90</span><span>1.0</span></div></th><th scope="col" class="metric-coll"><span class="point"></span><span>Collision</span></th></tr></thead><tbody>
+        <header class="event-heading">
+          <p class="overline"><span class="bars" aria-hidden="true"></span>Event judgments</p>
+          <h2 id="events-title">Can Models Judge and <em>Predict Events?</em></h2>
+          <p>Recognizing that two objects collided and judging whether a solid object passed through another are different tasks. We test six models on real collision videos and separately on physically possible and impossible scenes.</p>
+        </header>
+        <figure class="event-figure"><figcaption><span id="event-chart-title">Physical Consistency and Interaction</span><span class="chart-unit">AUROC · higher is better</span></figcaption>
+          <table class="range-table" aria-labelledby="event-chart-title" aria-describedby="event-chart-note"><thead><tr><th scope="col">Model</th><th scope="col" class="metric-np"><span class="point hollow"></span><span>Non-<wbr>penetration</span></th><th scope="col" aria-hidden="true"><div class="x-axis"><span>.50</span><span>.60</span><span>.70</span><span>.80</span><span>.90</span><span>1.0</span></div></th><th scope="col" class="metric-coll"><span class="point"></span><span>Collision</span></th></tr></thead><tbody>
             <tr><th scope="row">DINOv3 <small>ViT-L/16</small></th><td class="np-val">0.518</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:3.6%;--hi:71.2%"><i></i></div></td><td class="coll-val">0.856</td></tr>
             <tr><th scope="row">V-JEPA 2.1 <small>ViT-L</small></th><td class="np-val">0.547</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:9.4%;--hi:93.8%"><i></i></div></td><td class="coll-val">0.969</td></tr>
             <tr><th scope="row">Qwen3-VL <small>8B · visual</small></th><td class="np-val">0.540</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:8.0%;--hi:63.0%"><i></i></div></td><td class="coll-val">0.815</td></tr>
@@ -212,24 +745,168 @@
             <tr><th scope="row">LTX-2.5</th><td class="np-val">0.552</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:10.4%;--hi:80.8%"><i></i></div></td><td class="coll-val">0.904</td></tr>
             <tr><th scope="row">Cosmos-Predict2.5 <small>2B</small></th><td class="np-val">0.585</td><td class="plot-cell" aria-hidden="true"><div class="range-line" style="--lo:17.0%;--hi:77.2%"><i></i></div></td><td class="coll-val">0.886</td></tr>
           </tbody></table>
-          <p class="fig-note">Non-penetration uses IntPhys2 physical-consistency judgments. Collision recognition uses Something-Something v2. Chance AUROC is 0.50.</p>
+          <p class="fig-note" id="event-chart-note">On Something-Something v2, all six collision readouts score at least 0.815 AUROC. On IntPhys2, even the strongest non-penetration readout reaches only 0.585, close to chance (0.50).</p>
         </figure>
+        <article class="prediction-note">
+          <h3>Future Prediction</h3>
+          <p>Given only the observed part of a Genesis trajectory, the best readout depends on what happens next. LTX-2.5 leads on displacement, V-JEPA 2.1 on angular velocity, and Cosmos on accumulated rotation. We use these future targets to ask which features the predictions depend on.</p>
+        </article>
       </div></section>
 
       <section data-ark-depth="moderate" class="interventions section" id="interventions" aria-labelledby="inter-title"><div class="shell">
-        <p class="overline"><span class="bars" aria-hidden="true"></span>Feature interventions</p>
-        <div class="inter-head"><h2 id="inter-title">Which signals change<br><em>a prediction?</em></h2><p>In 48 eligible tests across six models and three scenes, we remove features associated with a physical variable and measure the change in a fixed predictor’s performance.</p></div>
-        <div class="effect-grid">
-          <div class="effect important"><p>Governing parameters &amp; speed</p><strong><span>≥</span>64<small>%</small></strong><div class="effect-rail"><i style="width:64%"></i></div><p class="effect-label">of the oracle performance drop after deletion</p></div>
-          <div class="effect control"><p>Position &amp; orientation controls</p><strong><span>≤</span>2<small>%</small></strong><div class="effect-rail"><i style="width:2%"></i></div><p class="effect-label">of the oracle performance drop after deletion</p></div>
+        <header class="probe-heading">
+          <div><p class="overline"><span class="bars" aria-hidden="true"></span>Feature interventions</p>
+            <h2 id="inter-title">Is Decodable <em>Information Used?</em></h2></div>
+          <p class="probe-intro">Take a readout trained to predict future displacement. We erase features associated with one physical variable and ask it to predict again. The bigger the drop in accuracy, the more that forecast depended on the edited features.</p>
+        </header>
+        <figure class="use-scatter" aria-labelledby="use-scatter-caption">
+          <figcaption id="use-scatter-caption">
+            <h3>Dependence of Fixed Future Readouts</h3>
+            <span>6 models · 48 edits</span>
+          </figcaption>
+          <div class="use-scatter__body">
+            <div class="use-scatter__chart">
+              <p class="use-scatter__y-label">Prediction loss <span>· fraction of oracle drop</span></p>
+              <div class="use-scatter__plot">
+                <div class="use-scatter__grid" aria-hidden="true">
+                  <span class="use-scatter__ytick use-scatter__zero" style="--v:0"><b>0</b></span>
+                  <span class="use-scatter__ytick" style="--v:0.25"><b>0.25</b></span>
+                  <span class="use-scatter__ytick" style="--v:0.5"><b>0.5</b></span>
+                  <span class="use-scatter__ytick" style="--v:0.75"><b>0.75</b></span>
+                  <span class="use-scatter__ytick" style="--v:1"><b>1</b></span>
+                  <span class="use-scatter__xtick" style="--v:0"><b>0</b></span>
+                  <span class="use-scatter__xtick" style="--v:0.25"><b>0.25</b></span>
+                  <span class="use-scatter__xtick" style="--v:0.5"><b>0.5</b></span>
+                  <span class="use-scatter__xtick" style="--v:0.75"><b>0.75</b></span>
+                  <span class="use-scatter__xtick" style="--v:1"><b>1</b></span>
+                </div>
+                <ul class="use-scatter__points use-scatter__points--causal" role="list" aria-label="Scene parameters and motion">
+                  <li style="--readability:0.59811693; --effect:1.01069459"><span class="use-scatter__available">DINOv3 ViT-L/16, mass scene, log mass. Probe R² 0.598, normalized drop 1.011.</span></li>
+                  <li style="--readability:0.96674783; --effect:0.96731610"><span class="use-scatter__available">V-JEPA 2.1 ViT-L, mass scene, log mass. Probe R² 0.967, normalized drop 0.967.</span></li>
+                  <li style="--readability:0.93792514; --effect:0.97639678"><span class="use-scatter__available">Qwen3-VL-8B, mass scene, log mass. Probe R² 0.938, normalized drop 0.976.</span></li>
+                  <li style="--readability:0.97975871; --effect:0.98117440"><span class="use-scatter__available">LTX-2.5, mass scene, log mass. Probe R² 0.980, normalized drop 0.981.</span></li>
+                  <li style="--readability:0.56404189; --effect:1.02696886"><span class="use-scatter__available">VGGT-1B, mass scene, log mass. Probe R² 0.564, normalized drop 1.027.</span></li>
+                  <li style="--readability:0.97967076; --effect:0.98062704"><span class="use-scatter__available">Cosmos-Predict2.5-2B, mass scene, log mass. Probe R² 0.980, normalized drop 0.981.</span></li>
+                  <li style="--readability:0.54850596; --effect:1.00000000"><span class="use-scatter__available">DINOv3 ViT-L/16, mass scene, terminal speed. Probe R² 0.549, normalized drop 1.000.</span></li>
+                  <li style="--readability:0.89596472; --effect:1.00000000"><span class="use-scatter__available">V-JEPA 2.1 ViT-L, mass scene, terminal speed. Probe R² 0.896, normalized drop 1.000.</span></li>
+                  <li style="--readability:0.88301924; --effect:1.00000000"><span class="use-scatter__available">Qwen3-VL-8B, mass scene, terminal speed. Probe R² 0.883, normalized drop 1.000.</span></li>
+                  <li style="--readability:0.97142203; --effect:1.00000000"><span class="use-scatter__available">LTX-2.5, mass scene, terminal speed. Probe R² 0.971, normalized drop 1.000.</span></li>
+                  <li style="--readability:0.61287616; --effect:1.00000000"><span class="use-scatter__available">VGGT-1B, mass scene, terminal speed. Probe R² 0.613, normalized drop 1.000.</span></li>
+                  <li style="--readability:0.96256528; --effect:1.00000000"><span class="use-scatter__available">Cosmos-Predict2.5-2B, mass scene, terminal speed. Probe R² 0.963, normalized drop 1.000.</span></li>
+                  <li style="--readability:0.92939085; --effect:0.66543589"><span class="use-scatter__available">DINOv3 ViT-L/16, friction scene, friction coefficient. Probe R² 0.929, normalized drop 0.665.</span></li>
+                  <li style="--readability:0.97243751; --effect:0.75004156"><span class="use-scatter__available">V-JEPA 2.1 ViT-L, friction scene, friction coefficient. Probe R² 0.972, normalized drop 0.750.</span></li>
+                  <li style="--readability:0.96265760; --effect:0.67012372"><span class="use-scatter__available">Qwen3-VL-8B, friction scene, friction coefficient. Probe R² 0.963, normalized drop 0.670.</span></li>
+                  <li style="--readability:0.99835254; --effect:0.73272693"><span class="use-scatter__available">LTX-2.5, friction scene, friction coefficient. Probe R² 0.998, normalized drop 0.733.</span></li>
+                  <li style="--readability:0.91916589; --effect:0.64908638"><span class="use-scatter__available">VGGT-1B, friction scene, friction coefficient. Probe R² 0.919, normalized drop 0.649.</span></li>
+                  <li style="--readability:0.99167269; --effect:0.72336379"><span class="use-scatter__available">Cosmos-Predict2.5-2B, friction scene, friction coefficient. Probe R² 0.992, normalized drop 0.723.</span></li>
+                  <li style="--readability:0.97254085; --effect:0.80392756"><span class="use-scatter__available">DINOv3 ViT-L/16, friction scene, terminal speed. Probe R² 0.973, normalized drop 0.804.</span></li>
+                  <li style="--readability:0.98230834; --effect:0.86541113"><span class="use-scatter__available">V-JEPA 2.1 ViT-L, friction scene, terminal speed. Probe R² 0.982, normalized drop 0.865.</span></li>
+                  <li style="--readability:0.98913380; --effect:0.81176779"><span class="use-scatter__available">Qwen3-VL-8B, friction scene, terminal speed. Probe R² 0.989, normalized drop 0.812.</span></li>
+                  <li style="--readability:0.99882937; --effect:0.84827292"><span class="use-scatter__available">LTX-2.5, friction scene, terminal speed. Probe R² 0.999, normalized drop 0.848.</span></li>
+                  <li style="--readability:0.97269530; --effect:0.78763758"><span class="use-scatter__available">VGGT-1B, friction scene, terminal speed. Probe R² 0.973, normalized drop 0.788.</span></li>
+                  <li style="--readability:0.99609205; --effect:0.84701520"><span class="use-scatter__available">Cosmos-Predict2.5-2B, friction scene, terminal speed. Probe R² 0.996, normalized drop 0.847.</span></li>
+                  <li style="--readability:0.95306146; --effect:0.77897112"><span class="use-scatter__available">V-JEPA 2.1 ViT-L, rotation scene, angular damping. Probe R² 0.953, normalized drop 0.779.</span></li>
+                  <li style="--readability:0.93341870; --effect:0.75490274"><span class="use-scatter__available">Qwen3-VL-8B, rotation scene, angular damping. Probe R² 0.933, normalized drop 0.755.</span></li>
+                  <li style="--readability:0.95334606; --effect:0.77845387"><span class="use-scatter__available">LTX-2.5, rotation scene, angular damping. Probe R² 0.953, normalized drop 0.778.</span></li>
+                  <li style="--readability:0.99092909; --effect:0.76948530"><span class="use-scatter__available">Cosmos-Predict2.5-2B, rotation scene, angular damping. Probe R² 0.991, normalized drop 0.769.</span></li>
+                  <li style="--readability:0.94998212; --effect:0.97609651"><span class="use-scatter__available">V-JEPA 2.1 ViT-L, rotation scene, terminal angular velocity. Probe R² 0.950, normalized drop 0.976.</span></li>
+                  <li style="--readability:0.68447137; --effect:1.01283130"><span class="use-scatter__available">Qwen3-VL-8B, rotation scene, terminal angular velocity. Probe R² 0.684, normalized drop 1.013.</span></li>
+                  <li style="--readability:0.95725970; --effect:0.97394159"><span class="use-scatter__available">LTX-2.5, rotation scene, terminal angular velocity. Probe R² 0.957, normalized drop 0.974.</span></li>
+                  <li style="--readability:0.96369916; --effect:0.97521702"><span class="use-scatter__available">Cosmos-Predict2.5-2B, rotation scene, terminal angular velocity. Probe R² 0.964, normalized drop 0.975.</span></li>
+                </ul>
+                <ul class="use-scatter__points use-scatter__points--control" role="list" aria-label="Position and orientation controls">
+                  <li style="--readability:0.97946226; --effect:-0.02126992"><span class="use-scatter__available">DINOv3 ViT-L/16, mass scene, terminal y-position. Probe R² 0.979, normalized drop -0.021.</span></li>
+                  <li style="--readability:0.94941577; --effect:-0.01484893"><span class="use-scatter__available">V-JEPA 2.1 ViT-L, mass scene, terminal y-position. Probe R² 0.949, normalized drop -0.015.</span></li>
+                  <li style="--readability:0.98768925; --effect:-0.00615959"><span class="use-scatter__available">Qwen3-VL-8B, mass scene, terminal y-position. Probe R² 0.988, normalized drop -0.006.</span></li>
+                  <li style="--readability:0.99460421; --effect:-0.00687637"><span class="use-scatter__available">LTX-2.5, mass scene, terminal y-position. Probe R² 0.995, normalized drop -0.007.</span></li>
+                  <li style="--readability:0.93290609; --effect:-0.04507908"><span class="use-scatter__available">VGGT-1B, mass scene, terminal y-position. Probe R² 0.933, normalized drop -0.045.</span></li>
+                  <li style="--readability:0.98694216; --effect:-0.00687874"><span class="use-scatter__available">Cosmos-Predict2.5-2B, mass scene, terminal y-position. Probe R² 0.987, normalized drop -0.007.</span></li>
+                  <li style="--readability:0.99143233; --effect:-0.00122283"><span class="use-scatter__available">DINOv3 ViT-L/16, friction scene, terminal y-position. Probe R² 0.991, normalized drop -0.001.</span></li>
+                  <li style="--readability:0.97550203; --effect:-0.00048935"><span class="use-scatter__available">V-JEPA 2.1 ViT-L, friction scene, terminal y-position. Probe R² 0.976, normalized drop -0.000.</span></li>
+                  <li style="--readability:0.98952868; --effect:-0.00148943"><span class="use-scatter__available">Qwen3-VL-8B, friction scene, terminal y-position. Probe R² 0.990, normalized drop -0.001.</span></li>
+                  <li style="--readability:0.99785544; --effect:-0.00011186"><span class="use-scatter__available">LTX-2.5, friction scene, terminal y-position. Probe R² 0.998, normalized drop -0.000.</span></li>
+                  <li style="--readability:0.98271061; --effect:-0.00176562"><span class="use-scatter__available">VGGT-1B, friction scene, terminal y-position. Probe R² 0.983, normalized drop -0.002.</span></li>
+                  <li style="--readability:0.99272904; --effect:-0.00012027"><span class="use-scatter__available">Cosmos-Predict2.5-2B, friction scene, terminal y-position. Probe R² 0.993, normalized drop -0.000.</span></li>
+                  <li style="--readability:0.78362742; --effect:0.01159120"><span class="use-scatter__available">V-JEPA 2.1 ViT-L, rotation scene, orientation. Probe R² 0.784, normalized drop 0.012.</span></li>
+                  <li style="--readability:0.08237076; --effect:0.01206255"><span class="use-scatter__available">Qwen3-VL-8B, rotation scene, orientation. Probe R² 0.082, normalized drop 0.012.</span></li>
+                  <li style="--readability:0.81495213; --effect:0.01669082"><span class="use-scatter__available">LTX-2.5, rotation scene, orientation. Probe R² 0.815, normalized drop 0.017.</span></li>
+                  <li style="--readability:0.81765619; --effect:0.01597669"><span class="use-scatter__available">Cosmos-Predict2.5-2B, rotation scene, orientation. Probe R² 0.818, normalized drop 0.016.</span></li>
+                </ul>
+              </div>
+              <p class="use-scatter__x-label">Readability before deletion <span>· probe R²</span></p>
+            </div>
+            <div class="use-scatter__sidebar">
+              <aside class="loss-definition" aria-label="How prediction loss is measured">
+                <h4>Reading the vertical axis</h4>
+                <div class="equation-line">
+                  <math display="block" aria-label="D sub q of one equals baseline R squared minus R squared after removing q, divided by baseline R squared minus R squared after removing the future target z">
+                    <mrow><msub><mi>D</mi><mi>q</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo>
+                      <mfrac>
+                        <mrow><msubsup><mi>R</mi><mn>0</mn><mn>2</mn></msubsup><mo>−</mo><msubsup><mi>R</mi><mrow><mi>q</mi><mo>,</mo><mn>1</mn></mrow><mn>2</mn></msubsup></mrow>
+                        <mrow><msubsup><mi>R</mi><mn>0</mn><mn>2</mn></msubsup><mo>−</mo><msubsup><mi>R</mi><mrow><mi>z</mi><mo>,</mo><mn>1</mn></mrow><mn>2</mn></msubsup></mrow>
+                      </mfrac>
+                    </mrow>
+                  </math>
+                </div>
+                <p>The numerator measures the drop in the fixed readout’s R² after erasing variable <i>q</i>. A value of 1 matches the loss from erasing the future target <i>z</i> itself.</p>
+              </aside>
+              <dl class="use-scatter__key">
+              <div>
+                <dt><i aria-hidden="true"></i>Scene parameters and motion</dt>
+                <dd><strong>0.65 to 1.03</strong><span>Mass, friction, angular damping, terminal speed and angular velocity.</span></dd>
+              </div>
+              <div>
+                <dt><i aria-hidden="true"></i>Position and orientation</dt>
+                <dd><strong>−0.05 to 0.02</strong><span>Erasing these controls leaves the forecast nearly unchanged.</span></dd>
+              </div>
+              </dl>
+            </div>
+          </div>
+          <p class="use-scatter__note">Each point represents one model, scene and erased variable. We normalize within each split, then average over three splits. Results include fixed readouts with baseline future R² ≥ 0.30.</p>
+        </figure>
+        <section class="native" id="native-predictions" aria-labelledby="native-title">
+          <div>
+            <h3 id="native-title">Interventions on Native Predictions</h3>
+            <p>How far will a box slide in the next second? We estimate its displacement from the features forecast by the frozen V-JEPA 2.1 predictor. With unedited features, the displacement readout reaches a test R² of 0.970.</p>
+            <p>We edit one cue before it reaches the predictor. Erasing it tests how much the forecast depends on that cue. In a separate test, we swap the cue between two clips and check whether the forecast shifts in the direction of the donor clip’s displacement.</p>
+          </div>
+          <div class="native-result">
+            <table>
+              <caption>Future displacement on the original friction trials</caption>
+              <thead>
+                <tr><th scope="col">Edited cue</th><th scope="col">Test R² after erasure</th><th scope="col">Swaps in donor’s direction</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Friction coefficient</th><td>0.794</td><td>100%</td></tr>
+                <tr><th scope="row">Terminal speed</th><td>0.781</td><td>100%</td></tr>
+                <tr><th scope="row">Terminal <i>y</i>-position</th><td>0.970</td><td>37.5%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div></section>
+      <section data-ark-depth="moderate" class="conclusion section" id="conclusion" aria-labelledby="conclusion-title"><div class="shell">
+        <div class="story-close">
+          <h2 id="conclusion-title">Conclusion</h2>
+          <p>A single frame taken at the end of a box’s motion can already give a readout enough evidence to estimate its mean speed. Changing the box to a cylinder can defeat a mass readout even though a new one recovers mass. And in a displacement forecast, erasing friction-linked features matters far more than erasing position. Together these experiments show where a physical signal is available, which observations support it, and when a particular prediction depends on it.</p>
         </div>
-        <p class="effect-note">The oracle measures the drop in future-prediction R² after erasing features associated with the future target itself. Position and orientation are readily decoded, yet deleting their components has little effect on these predictions.</p>
-        <div class="native"><div><p class="overline">Frozen V-JEPA 2.1 predictor</p><h3>Editing friction-linked features shifts the forecast.</h3><p>Deleting friction-linked features reduces future-displacement R². Deleting position changes it by less than 0.01. Friction and terminal speed covary in these trajectories, so either can contribute to the effect.</p></div>
-          <div class="forecast"><div><strong>0.97</strong><span>Original</span></div><span class="forecast-rule" aria-hidden="true"></span><div><strong>0.79</strong><span>Friction-linked edit</span></div></div></div>
       </div></section>
     </main>
-    <footer><div class="shell footer-inner"><a class="brand" href="#top"><svg class="brand-symbol" viewBox="0 0 44 44" fill="none" aria-hidden="true"><circle cx="22" cy="22" r="15" stroke="currentColor" stroke-width="1.05"/><ellipse cx="22" cy="22" rx="21" ry="7" transform="rotate(-35 22 22)" stroke="currentColor" stroke-width="1.1"/><path d="m22 12 2 8 8 2-8 2-2 8-2-8-8-2 8-2z" fill="currentColor"/></svg><span>Physical Probing</span></a><p>What Do Foundation Models Know About Physics?</p><span class="footer-year">2026</span></div></footer>
+    <footer>
+      <div class="shell footer-inner">
+        <span class="brand">Physical Probing</span>
+        <nav class="footer-actions" aria-label="Project resources and navigation">
+          <button type="button" disabled title="Paper on arXiv, coming soon">arXiv</button>
+          <button type="button" disabled title="Code on GitHub, coming soon">GitHub</button>
+          <button type="button" disabled title="Model on Hugging Face, coming soon">Hugging Face</button>
+          <a href="#top">Back to top</a>
+        </nav>
+        <p>What Do Foundation Models Know About Physics?</p>
+        <span class="footer-year">2026</span>
+      </div>
+    </footer>
   </div>
-  <script src="presentation.js?v=intro-entry-2"></script>
+  <script src="presentation.js?v=observation-carousel"></script>
+  <script src="observation-carousel.js?v=corner-count"></script>
   <script src="atlas.js"></script>
 </body></html>

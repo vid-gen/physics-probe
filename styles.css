@@ -25,7 +25,7 @@ img { display: block; max-width: 100% }
 .overline, .author-note, .resource-row+p, .chart-unit, .fig-note, .effect-note, .effect-label, .native .overline, .footer-year { font-family: var(--mono) }
 .overline { display: flex; align-items: center; gap: .68rem; font-size: .8125rem; line-height: 1.45; letter-spacing: .09em; text-transform: uppercase }
 .bars { flex: none }
-h2, .modality h3, .transfer figcaption>span, .event-figure figcaption>span:first-child, .last-figure strong, .effect strong, .native h3, .forecast strong { font-family: var(--display); font-weight: 600 }
+h2, .modality h3, .transfer figcaption>span, .event-figure figcaption>span:first-child, .last-figure strong, .effect strong, .native h3 { font-family: var(--display); font-weight: 600 }
 .author-list, .affils, .resource-row { display: flex; flex-wrap: wrap; align-items: center }
 .author-list { gap: .25rem 1.13rem; line-height: 1.4; font-weight: 600; font-size: 1.015rem; letter-spacing: -.025em }
 .author-list span, .affils span { white-space: nowrap }
@@ -117,12 +117,6 @@ h2 em { font-weight: 600 }
 .native { border: 1px solid var(--rule); padding: clamp(1.35rem,3.05vw,3.2rem); display: grid; grid-template-columns: 1.15fr .85fr; gap: 3.2rem; align-items: center }
 .native h3 { font-size: clamp(1.95rem,3.2vw,3.3rem); line-height: 1.04; letter-spacing: -.04em; margin: .6rem 0 .8rem }
 .native>div>p:last-child { font-size: 1rem }
-.forecast { display: flex; gap: 1.1rem; align-items: center; justify-content: center }
-.forecast>div { display: grid; gap: .3rem }
-.forecast strong { font-size: clamp(3.4rem,5.2vw,6rem); line-height: 1; letter-spacing: -.05em }
-.forecast div span { font: .8rem var(--mono) }
-.forecast-rule { width: clamp(1.4rem,3vw,3rem); height: 1px; position: relative; margin-bottom: 1.25rem }
-.forecast-rule:after { content: ""; position: absolute; right: 0; top: -3px; width: 6px; height: 6px; transform: rotate(-45deg); border-right: 1px solid currentColor; border-bottom: 1px solid currentColor }
 .footer-inner { padding: 1.8rem 0 }
 .footer-inner p { font-size: .875rem; margin-left: auto }
 .footer-year { border-left: 1px solid var(--hair); padding-left: 1.5rem }
@@ -130,11 +124,11 @@ h2 em { font-weight: 600 }
 .matched h3 { font: 600 clamp(1.65rem,2.6vw,2.65rem)/1.06 var(--display); letter-spacing: -.035em }
 .matched figcaption p { max-width: 23rem; margin: .65rem 0 }
 .matched dl { display: flex; gap: 1.5rem; margin: .9rem 0 0 }
-.matched dt, .frame-label, .time-labels { font: .78rem/1.4 var(--mono) }
+.matched dt, .trajectory-labels { font: .78rem/1.4 var(--mono) }
 .matched dd { margin: 0; font-weight: 570 }
-.frames { display: grid; grid-template-columns: 4.2rem minmax(0,1fr); gap: .22rem .65rem; align-items: center }
-.frames img { width: 100%; height: auto }
-.time-labels { display: grid; grid-template-columns: repeat(3,1fr); grid-column: 2; text-align: center; margin-bottom: .2rem }
+.trajectory-pair { min-width: 0 }
+.trajectory-pair video { display: block; width: 100%; height: auto; background: #a1a5ad }
+.trajectory-labels { display: grid; grid-template-columns: 1fr 1fr; margin-bottom: .45rem; text-align: center }
 @media(max-width:800px) {
   .matched { grid-template-columns: 1fr; row-gap: 1.2rem }
   .matched figcaption { display: grid; grid-template-columns: 1fr auto; column-gap: 1rem }
@@ -145,8 +139,6 @@ h2 em { font-weight: 600 }
   .matched { padding-top: 1.4rem }
   .matched figcaption { display: block }
   .matched dl { margin-top: .7rem }
-  .frames { grid-template-columns: 3.6rem minmax(0,1fr); column-gap: .4rem }
-  .time-labels, .frame-label { font-size: .75rem }
 }
 @media(max-width:1050px) {
   .author-list { gap: .25rem .7rem; font-size: .94rem }
@@ -222,9 +214,6 @@ h2 em { font-weight: 600 }
   .effect-label { font-size: .75rem }
   .effect-note { margin-bottom: 1.6rem }
   .native { display: block; padding: 1.25rem }
-  .forecast { margin-top: 1.3rem; justify-content: flex-start }
-  .forecast strong { font-size: 3.5rem }
-  .forecast-rule { width: 2.3rem }
   .footer-inner { flex-wrap: wrap; gap: .7rem }
   .footer-inner p { order: 3; flex-basis: 100%; margin: 0; font-size: .8rem }
   .footer-year { margin-left: auto; border: 0; padding: 0 }
